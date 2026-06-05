@@ -17,7 +17,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
 
       - name: Install frontend dependencies
@@ -58,4 +58,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: pwsh
         run: |
-          gh release upload v0.15.0 codeg-v0.15.0-win64.zip --clobber
+          $tag = "${{ github.ref_name }}"
+          gh release upload $tag codeg-v0.15.0-win64.zip --clobber
