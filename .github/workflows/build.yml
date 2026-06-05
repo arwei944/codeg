@@ -48,6 +48,19 @@ jobs:
           cp -Recurse out/* dist/out/
           Compress-Archive -Path dist/* -DestinationPath "codeg-v0.15.0-win64.zip" -Force
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codeg-win64
+          path: codeg-v0.15.0-win64.zip
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          gh release create $tag --title "$tag" --notes "Desktop + Server build" || true
+
       - name: Upload to Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
