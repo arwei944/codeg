@@ -132,6 +132,22 @@
     "checkUpdateFailed": "Falha ao verificar atualizações: {message}",
     "installSuccess": "Atualização instalada. Reiniciando o app.",
     "installFailed": "Falha na atualização: {message}",
+    "upgradeSuccess": "Atualização concluída. Recarregando...",
+    "restartTimeout": "O servidor não voltou a tempo. Verifique os logs do contêiner ou do serviço.",
+    "restartingIn": "Reiniciando em {seconds} s...",
+    "waitingForServer": "Aguardando o servidor voltar...",
+    "dockerUpgradeHint": "Isto atualiza o contêiner em execução agora. Perde-se se o contêiner for recriado — para mantê-lo, baixe ou crie uma imagem na nova versão e recrie o contêiner.",
+    "upgradeRolledBack": "Falha na atualização; o servidor reverteu para a versão anterior.",
+    "serverUnreachable": "Não foi possível acessar o servidor para iniciar a atualização. Verifique se ele está em execução e tente novamente.",
+    "rollbackButton": "Reverter",
+    "rollingBack": "Revertendo...",
+    "rollbackDescription": "Restaura a versão instalada antes da última atualização.",
+    "rollbackConfirmTitle": "Reverter para a versão anterior?",
+    "rollbackConfirmDescription": "O servidor será reiniciado na versão instalada antes da última atualização. Uma versão mais recente continua disponível para instalar novamente.",
+    "rollbackConfirm": "Reverter",
+    "rollbackCancel": "Cancelar",
+    "rollbackSuccess": "Revertido para a versão anterior. Recarregando...",
+    "rollbackFailed": "Falha ao reverter. Verifique os registros do servidor.",
     "updateErrors": {
       "sourceUnavailable": "Não foi possível acessar a fonte de atualização. Verifique sua rede ou proxy e tente novamente.",
       "network": "Falha na conexão de rede. Verifique sua rede ou proxy e tente novamente.",
@@ -264,6 +280,14 @@
       "close_all_file_tabs": {
         "title": "Fechar todas as abas de arquivo",
         "description": "Fecha todas as abas de arquivo abertas quando o painel de arquivos está ativo"
+      },
+      "next_tab": {
+        "title": "Próxima aba",
+        "description": "Mudar para a próxima aba de conversa ou arquivo"
+      },
+      "prev_tab": {
+        "title": "Aba anterior",
+        "description": "Mudar para a aba anterior de conversa ou arquivo"
       },
       "send_message": {
         "title": "Enviar mensagem",
@@ -1467,6 +1491,7 @@
       "newDirectory": "Diretório",
       "openIn": "Abrir em",
       "openInTerminal": "Abrir no terminal",
+      "copyPath": "Copiar caminho",
       "upload": "Enviar arquivos/pasta",
       "download": "Baixar arquivo",
       "downloadAsZip": "Baixar como ZIP",
@@ -1500,7 +1525,9 @@
         "watchStartFailed": "Falha ao iniciar monitoramento de arquivos",
         "createFailed": "Falha ao criar",
         "downloadFailed": "Falha ao baixar {name}",
-        "downloadSaved": "{name} baixado"
+        "downloadSaved": "{name} baixado",
+        "pathCopied": "Caminho copiado",
+        "copyPathFailed": "Falha ao copiar o caminho"
       },
       "createDialog": {
         "newFile": "Novo arquivo",
@@ -2286,8 +2313,35 @@
       "turnCompleteDesc": "Quando um turno do agente termina",
       "error": "Erro do agente",
       "errorDesc": "Quando um agente encontra um erro",
+      "permissionRequest": "Solicitação de permissão",
+      "permissionRequestDesc": "Quando um agente solicita permissão para agir",
+      "userPromptSent": "Mensagem do usuário",
+      "userPromptSentDesc": "Quando você envia uma mensagem (o texto da mensagem é incluído na notificação)",
       "saved": "Filtro de eventos atualizado.",
-      "saveFailed": "Falha ao salvar o filtro de eventos."
+      "saveFailed": "Falha ao salvar o filtro de eventos.",
+      "loadFailed": "Falha ao carregar as configurações.",
+      "retry": "Tentar novamente",
+      "webhooksTitle": "Webhooks",
+      "webhooksDescription": "Envia uma carga JSON via POST para uma ou mais URLs quando um evento ativado ocorre. O filtro de eventos acima também se aplica aos webhooks.",
+      "webhookUrlPlaceholder": "https://example.com/webhook",
+      "addWebhook": "Adicionar webhook",
+      "removeWebhook": "Remover webhook",
+      "webhookSave": "Salvar",
+      "webhooksSaved": "Webhooks salvos.",
+      "webhooksSaveFailed": "Falha ao salvar os webhooks.",
+      "webhookInvalidUrl": "Insira URLs http(s) válidas.",
+      "docsTitle": "Formato da requisição",
+      "docsMethod": "Método",
+      "docsContentType": "Content-Type",
+      "docsNote": "Cada evento ativado é entregue a todas as URLs. Os webhooks não têm debounce; o filtro de eventos acima continua valendo.",
+      "editWebhook": "Editar webhook",
+      "enableWebhook": "Ativar webhook",
+      "webhookDuplicate": "Esta URL já está configurada.",
+      "cancel": "Cancelar",
+      "webhooksEmpty": "Nenhum webhook configurado ainda.",
+      "deleteWebhookTitle": "Excluir webhook",
+      "deleteWebhookMessage": "Remover este webhook? Os eventos não serão mais entregues a esta URL.",
+      "delete": "Excluir"
     },
     "language": {
       "title": "Idioma das mensagens",

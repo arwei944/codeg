@@ -132,6 +132,22 @@
     "checkUpdateFailed": "檢查更新失敗：{message}",
     "installSuccess": "升級包已安裝，正在重新啟動應用",
     "installFailed": "升級失敗：{message}",
+    "upgradeSuccess": "升級完成，正在重新載入...",
+    "restartTimeout": "服務未能即時恢復，請檢查容器或服務記錄。",
+    "restartingIn": "將在 {seconds} 秒後重新啟動...",
+    "waitingForServer": "正在等待服務恢復...",
+    "dockerUpgradeHint": "現在升級的是正在執行的容器。容器一旦被重新建立即遺失——如需保留，請拉取或建置新版本映像後重新建立容器。",
+    "upgradeRolledBack": "升級失敗，伺服器已自動回復到上一版本。",
+    "serverUnreachable": "無法連線到伺服器以開始升級。請確認伺服器正在執行後重試。",
+    "rollbackButton": "復原",
+    "rollingBack": "復原中...",
+    "rollbackDescription": "還原至上次升級前安裝的版本。",
+    "rollbackConfirmTitle": "復原到上一個版本？",
+    "rollbackConfirmDescription": "伺服器將重新啟動並執行上次升級前安裝的版本。較新的版本仍可再次安裝。",
+    "rollbackConfirm": "復原",
+    "rollbackCancel": "取消",
+    "rollbackSuccess": "已復原到上一個版本，正在重新載入……",
+    "rollbackFailed": "復原失敗，請檢查伺服器日誌。",
     "updateErrors": {
       "sourceUnavailable": "無法連線更新來源，請檢查網路或代理設定後重試。",
       "network": "網路連線異常，請檢查網路或代理設定後重試。",
@@ -264,6 +280,14 @@
       "close_all_file_tabs": {
         "title": "關閉全部檔案分頁",
         "description": "當檔案面板處於作用中狀態時關閉所有開啟的檔案分頁"
+      },
+      "next_tab": {
+        "title": "下一個標籤頁",
+        "description": "切換到下一個會話或檔案標籤頁"
+      },
+      "prev_tab": {
+        "title": "上一個標籤頁",
+        "description": "切換到上一個會話或檔案標籤頁"
       },
       "send_message": {
         "title": "傳送訊息",
@@ -1467,6 +1491,7 @@
       "newDirectory": "目錄",
       "openIn": "開啟於",
       "openInTerminal": "在終端開啟",
+      "copyPath": "複製路徑",
       "upload": "上傳檔案/目錄",
       "download": "下載檔案",
       "downloadAsZip": "下載為 ZIP",
@@ -1500,7 +1525,9 @@
         "watchStartFailed": "檔案監聽啟動失敗",
         "createFailed": "建立失敗",
         "downloadFailed": "下載 {name} 失敗",
-        "downloadSaved": "已下載 {name}"
+        "downloadSaved": "已下載 {name}",
+        "pathCopied": "已複製路徑",
+        "copyPathFailed": "複製路徑失敗"
       },
       "createDialog": {
         "newFile": "新建檔案",
@@ -2286,8 +2313,35 @@
       "turnCompleteDesc": "代理回合結束時",
       "error": "代理錯誤",
       "errorDesc": "代理遇到錯誤時",
+      "permissionRequest": "權限請求",
+      "permissionRequestDesc": "智慧代理請求操作權限時",
+      "userPromptSent": "使用者訊息",
+      "userPromptSentDesc": "當你傳送訊息時——通知中會包含訊息內容",
       "saved": "事件篩選已更新。",
-      "saveFailed": "儲存事件篩選失敗。"
+      "saveFailed": "儲存事件篩選失敗。",
+      "loadFailed": "載入設定失敗。",
+      "retry": "重試",
+      "webhooksTitle": "Webhook",
+      "webhooksDescription": "事件觸發時，向一個或多個位址 POST 一份 JSON。上方的事件篩選同樣作用於 Webhook。",
+      "webhookUrlPlaceholder": "https://example.com/webhook",
+      "addWebhook": "新增 Webhook",
+      "removeWebhook": "刪除 Webhook",
+      "webhookSave": "儲存",
+      "webhooksSaved": "Webhook 已儲存。",
+      "webhooksSaveFailed": "儲存 Webhook 失敗。",
+      "webhookInvalidUrl": "請輸入有效的 http(s) 位址。",
+      "docsTitle": "請求格式",
+      "docsMethod": "請求方式",
+      "docsContentType": "內容類型",
+      "docsNote": "每個啟用的事件都會投遞到所有位址。Webhook 不做去抖；上方的事件篩選仍然生效。",
+      "editWebhook": "編輯 Webhook",
+      "enableWebhook": "啟用 Webhook",
+      "webhookDuplicate": "該位址已設定。",
+      "cancel": "取消",
+      "webhooksEmpty": "尚未設定 Webhook。",
+      "deleteWebhookTitle": "刪除 Webhook",
+      "deleteWebhookMessage": "刪除此 Webhook？事件將不再傳送到該網址。",
+      "delete": "刪除"
     },
     "language": {
       "title": "訊息語言",

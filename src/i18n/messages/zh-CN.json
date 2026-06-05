@@ -132,6 +132,22 @@
     "checkUpdateFailed": "检查更新失败：{message}",
     "installSuccess": "升级包已安装，正在重启应用",
     "installFailed": "升级失败：{message}",
+    "upgradeSuccess": "升级完成，正在重新加载...",
+    "restartTimeout": "服务未能按时恢复，请检查容器或服务日志。",
+    "restartingIn": "将在 {seconds} 秒后重启...",
+    "waitingForServer": "正在等待服务恢复...",
+    "dockerUpgradeHint": "现在升级的是正在运行的容器。容器一旦被重建即丢失——如需保留，请拉取或构建新版本镜像后重建容器。",
+    "upgradeRolledBack": "升级失败，服务器已自动回滚到上一版本。",
+    "serverUnreachable": "无法连接到服务器以开始升级。请确认服务器正在运行后重试。",
+    "rollbackButton": "回滚",
+    "rollingBack": "回滚中...",
+    "rollbackDescription": "恢复到上次升级前安装的版本。",
+    "rollbackConfirmTitle": "回滚到上一个版本？",
+    "rollbackConfirmDescription": "服务器将重启并运行上次升级前安装的版本。更新的版本仍可再次安装。",
+    "rollbackConfirm": "回滚",
+    "rollbackCancel": "取消",
+    "rollbackSuccess": "已回滚到上一个版本，正在重新加载……",
+    "rollbackFailed": "回滚失败，请检查服务器日志。",
     "updateErrors": {
       "sourceUnavailable": "无法连接更新源，请检查网络或代理设置后重试。",
       "network": "网络连接异常，请检查网络或代理设置后重试。",
@@ -264,6 +280,14 @@
       "close_all_file_tabs": {
         "title": "关闭全部文件标签",
         "description": "当文件面板处于活动状态时关闭所有打开的文件标签"
+      },
+      "next_tab": {
+        "title": "下一个标签页",
+        "description": "切换到下一个会话或文件标签页"
+      },
+      "prev_tab": {
+        "title": "上一个标签页",
+        "description": "切换到上一个会话或文件标签页"
       },
       "send_message": {
         "title": "发送消息",
@@ -1467,6 +1491,7 @@
       "newDirectory": "目录",
       "openIn": "打开于",
       "openInTerminal": "在终端打开",
+      "copyPath": "复制路径",
       "upload": "上传文件/目录",
       "download": "下载文件",
       "downloadAsZip": "下载为 ZIP",
@@ -1500,7 +1525,9 @@
         "watchStartFailed": "文件监听启动失败",
         "createFailed": "创建失败",
         "downloadFailed": "下载 {name} 失败",
-        "downloadSaved": "已下载 {name}"
+        "downloadSaved": "已下载 {name}",
+        "pathCopied": "已复制路径",
+        "copyPathFailed": "复制路径失败"
       },
       "createDialog": {
         "newFile": "新建文件",
@@ -2298,8 +2325,35 @@
       "turnCompleteDesc": "代理回合结束时",
       "error": "代理错误",
       "errorDesc": "代理遇到错误时",
+      "permissionRequest": "权限请求",
+      "permissionRequestDesc": "智能体请求操作权限时",
+      "userPromptSent": "用户消息",
+      "userPromptSentDesc": "当你发送消息时——通知中会包含消息内容",
       "saved": "事件过滤已更新。",
-      "saveFailed": "保存事件过滤失败。"
+      "saveFailed": "保存事件过滤失败。",
+      "loadFailed": "加载设置失败。",
+      "retry": "重试",
+      "webhooksTitle": "Webhook",
+      "webhooksDescription": "事件触发时，向一个或多个地址 POST 一份 JSON。上方的事件过滤同样作用于 Webhook。",
+      "webhookUrlPlaceholder": "https://example.com/webhook",
+      "addWebhook": "添加 Webhook",
+      "removeWebhook": "删除 Webhook",
+      "webhookSave": "保存",
+      "webhooksSaved": "Webhook 已保存。",
+      "webhooksSaveFailed": "保存 Webhook 失败。",
+      "webhookInvalidUrl": "请输入有效的 http(s) 地址。",
+      "docsTitle": "请求格式",
+      "docsMethod": "请求方式",
+      "docsContentType": "内容类型",
+      "docsNote": "每个启用的事件都会投递到所有地址。Webhook 不做去抖；上方的事件过滤仍然生效。",
+      "editWebhook": "编辑 Webhook",
+      "enableWebhook": "启用 Webhook",
+      "webhookDuplicate": "该地址已配置。",
+      "cancel": "取消",
+      "webhooksEmpty": "尚未配置 Webhook。",
+      "deleteWebhookTitle": "删除 Webhook",
+      "deleteWebhookMessage": "删除此 Webhook？事件将不再投递到该地址。",
+      "delete": "删除"
     },
     "language": {
       "title": "消息语言",

@@ -132,6 +132,22 @@
     "checkUpdateFailed": "فشل التحقق من التحديثات: {message}",
     "installSuccess": "تم تثبيت التحديث. جارٍ إعادة تشغيل التطبيق.",
     "installFailed": "فشل التحديث: {message}",
+    "upgradeSuccess": "اكتملت الترقية. جارٍ إعادة التحميل...",
+    "restartTimeout": "لم يعد الخادم في الوقت المناسب. تحقق من سجلات الحاوية أو الخدمة.",
+    "restartingIn": "إعادة التشغيل خلال {seconds} ثانية...",
+    "waitingForServer": "في انتظار عودة الخادم...",
+    "dockerUpgradeHint": "يؤدي هذا إلى ترقية الحاوية قيد التشغيل الآن. وتُفقد عند إعادة إنشاء الحاوية — وللاحتفاظ بها، اسحب أو ابنِ صورة بالإصدار الجديد ثم أعد إنشاء الحاوية.",
+    "upgradeRolledBack": "فشلت الترقية؛ عاد الخادم إلى الإصدار السابق.",
+    "serverUnreachable": "تعذّر الوصول إلى الخادم لبدء الترقية. تأكد من أنه قيد التشغيل وحاول مرة أخرى.",
+    "rollbackButton": "التراجع",
+    "rollingBack": "جارٍ التراجع...",
+    "rollbackDescription": "استعادة الإصدار المثبَّت قبل آخر ترقية.",
+    "rollbackConfirmTitle": "التراجع إلى الإصدار السابق؟",
+    "rollbackConfirmDescription": "ستعيد الخادم التشغيل على الإصدار المثبَّت قبل آخر ترقية. ويبقى الإصدار الأحدث متاحًا لإعادة التثبيت.",
+    "rollbackConfirm": "التراجع",
+    "rollbackCancel": "إلغاء",
+    "rollbackSuccess": "تم التراجع إلى الإصدار السابق. جارٍ إعادة التحميل...",
+    "rollbackFailed": "فشل التراجع. تحقّق من سجلات الخادم.",
     "updateErrors": {
       "sourceUnavailable": "تعذر الوصول إلى مصدر التحديث. تحقق من الشبكة أو الوكيل ثم أعد المحاولة.",
       "network": "فشل اتصال الشبكة. تحقق من الشبكة أو الوكيل ثم أعد المحاولة.",
@@ -264,6 +280,14 @@
       "close_all_file_tabs": {
         "title": "إغلاق جميع تبويبات الملفات",
         "description": "إغلاق جميع تبويبات الملفات المفتوحة عندما تكون لوحة الملفات نشطة"
+      },
+      "next_tab": {
+        "title": "علامة التبويب التالية",
+        "description": "التبديل إلى علامة تبويب المحادثة أو الملف التالية"
+      },
+      "prev_tab": {
+        "title": "علامة التبويب السابقة",
+        "description": "التبديل إلى علامة تبويب المحادثة أو الملف السابقة"
       },
       "send_message": {
         "title": "إرسال الرسالة",
@@ -1467,6 +1491,7 @@
       "newDirectory": "مجلد",
       "openIn": "فتح في",
       "openInTerminal": "فتح في الطرفية",
+      "copyPath": "نسخ المسار",
       "upload": "رفع ملفات/مجلد",
       "download": "تنزيل ملف",
       "downloadAsZip": "تنزيل كملف ZIP",
@@ -1500,7 +1525,9 @@
         "watchStartFailed": "فشل بدء مراقبة الملفات",
         "createFailed": "فشل في الإنشاء",
         "downloadFailed": "فشل تنزيل {name}",
-        "downloadSaved": "تم تنزيل {name}"
+        "downloadSaved": "تم تنزيل {name}",
+        "pathCopied": "تم نسخ المسار",
+        "copyPathFailed": "فشل نسخ المسار"
       },
       "createDialog": {
         "newFile": "ملف جديد",
@@ -2286,8 +2313,35 @@
       "turnCompleteDesc": "عند انتهاء دور الوكيل",
       "error": "خطأ الوكيل",
       "errorDesc": "عندما يواجه الوكيل خطأ",
+      "permissionRequest": "طلب إذن",
+      "permissionRequestDesc": "عندما يطلب الوكيل إذنًا لتنفيذ إجراء",
+      "userPromptSent": "رسالة المستخدم",
+      "userPromptSentDesc": "عند إرسالك رسالة — يُضمَّن نص الرسالة في الإشعار",
       "saved": "تم تحديث فلتر الأحداث.",
-      "saveFailed": "فشل حفظ فلتر الأحداث."
+      "saveFailed": "فشل حفظ فلتر الأحداث.",
+      "loadFailed": "فشل تحميل الإعدادات.",
+      "retry": "إعادة المحاولة",
+      "webhooksTitle": "Webhooks",
+      "webhooksDescription": "يرسل حمولة JSON عبر POST إلى عنوان واحد أو أكثر عند تشغيل حدث مُفعَّل. ينطبق فلتر الأحداث أعلاه على Webhooks أيضًا.",
+      "webhookUrlPlaceholder": "https://example.com/webhook",
+      "addWebhook": "إضافة Webhook",
+      "removeWebhook": "إزالة Webhook",
+      "webhookSave": "حفظ",
+      "webhooksSaved": "تم حفظ Webhooks.",
+      "webhooksSaveFailed": "فشل حفظ Webhooks.",
+      "webhookInvalidUrl": "أدخل عناوين http(s) صالحة.",
+      "docsTitle": "تنسيق الطلب",
+      "docsMethod": "الطريقة",
+      "docsContentType": "Content-Type",
+      "docsNote": "يتم تسليم كل حدث مُفعَّل إلى جميع العناوين. لا يتم تأخير Webhooks؛ ولا يزال فلتر الأحداث أعلاه ساريًا.",
+      "editWebhook": "تعديل Webhook",
+      "enableWebhook": "تفعيل Webhook",
+      "webhookDuplicate": "هذا العنوان مُعد بالفعل.",
+      "cancel": "إلغاء",
+      "webhooksEmpty": "لا توجد Webhooks مُعدة بعد.",
+      "deleteWebhookTitle": "حذف Webhook",
+      "deleteWebhookMessage": "هل تريد حذف هذا الـ Webhook؟ لن يتم تسليم الأحداث إلى هذا العنوان بعد الآن.",
+      "delete": "حذف"
     },
     "language": {
       "title": "لغة الرسائل",

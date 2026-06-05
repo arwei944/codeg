@@ -132,6 +132,22 @@
     "checkUpdateFailed": "Update-Prüfung fehlgeschlagen: {message}",
     "installSuccess": "Update installiert. App wird neu gestartet.",
     "installFailed": "Update fehlgeschlagen: {message}",
+    "upgradeSuccess": "Aktualisierung abgeschlossen. Wird neu geladen...",
+    "restartTimeout": "Der Server ist nicht rechtzeitig zurückgekehrt. Prüfe die Container- oder Dienstprotokolle.",
+    "restartingIn": "Neustart in {seconds} s...",
+    "waitingForServer": "Warten, bis der Server zurückkehrt...",
+    "dockerUpgradeHint": "Dies aktualisiert jetzt den laufenden Container. Beim Neuerstellen des Containers geht es verloren – zum Beibehalten ein Image mit der neuen Version ziehen oder bauen und den Container neu erstellen.",
+    "upgradeRolledBack": "Upgrade fehlgeschlagen; der Server wurde auf die vorherige Version zurückgesetzt.",
+    "serverUnreachable": "Der Server konnte für das Upgrade nicht erreicht werden. Prüfe, ob er läuft, und versuche es erneut.",
+    "rollbackButton": "Zurücksetzen",
+    "rollingBack": "Wird zurückgesetzt...",
+    "rollbackDescription": "Stellt die vor dem letzten Upgrade installierte Version wieder her.",
+    "rollbackConfirmTitle": "Auf die vorherige Version zurücksetzen?",
+    "rollbackConfirmDescription": "Der Server startet mit der vor dem letzten Upgrade installierten Version neu. Eine neuere Version kann weiterhin erneut installiert werden.",
+    "rollbackConfirm": "Zurücksetzen",
+    "rollbackCancel": "Abbrechen",
+    "rollbackSuccess": "Auf die vorherige Version zurückgesetzt. Wird neu geladen...",
+    "rollbackFailed": "Zurücksetzen fehlgeschlagen. Prüfe die Serverprotokolle.",
     "updateErrors": {
       "sourceUnavailable": "Die Update-Quelle ist nicht erreichbar. Prüfe Netzwerk oder Proxy und versuche es erneut.",
       "network": "Netzwerkverbindung fehlgeschlagen. Prüfe Netzwerk oder Proxy und versuche es erneut.",
@@ -264,6 +280,14 @@
       "close_all_file_tabs": {
         "title": "Alle Dateitabs schließen",
         "description": "Schließt alle geöffneten Dateitabs, wenn der Dateibereich aktiv ist"
+      },
+      "next_tab": {
+        "title": "Nächster Tab",
+        "description": "Zum nächsten Konversations- oder Datei-Tab wechseln"
+      },
+      "prev_tab": {
+        "title": "Vorheriger Tab",
+        "description": "Zum vorherigen Konversations- oder Datei-Tab wechseln"
       },
       "send_message": {
         "title": "Nachricht senden",
@@ -1467,6 +1491,7 @@
       "newDirectory": "Verzeichnis",
       "openIn": "Öffnen in",
       "openInTerminal": "Im Terminal öffnen",
+      "copyPath": "Pfad kopieren",
       "upload": "Dateien/Ordner hochladen",
       "download": "Datei herunterladen",
       "downloadAsZip": "Als ZIP herunterladen",
@@ -1500,7 +1525,9 @@
         "watchStartFailed": "Dateiwatch konnte nicht gestartet werden",
         "createFailed": "Erstellen fehlgeschlagen",
         "downloadFailed": "Herunterladen von {name} fehlgeschlagen",
-        "downloadSaved": "{name} heruntergeladen"
+        "downloadSaved": "{name} heruntergeladen",
+        "pathCopied": "Pfad kopiert",
+        "copyPathFailed": "Pfad konnte nicht kopiert werden"
       },
       "createDialog": {
         "newFile": "Neue Datei",
@@ -2286,8 +2313,35 @@
       "turnCompleteDesc": "Wenn eine Agentenrunde endet",
       "error": "Agentenfehler",
       "errorDesc": "Wenn ein Agent einen Fehler feststellt",
+      "permissionRequest": "Berechtigungsanfrage",
+      "permissionRequestDesc": "Wenn ein Agent eine Berechtigung anfordert",
+      "userPromptSent": "Benutzernachricht",
+      "userPromptSentDesc": "Wenn du eine Nachricht sendest – der Nachrichtentext ist in der Benachrichtigung enthalten",
       "saved": "Ereignisfilter aktualisiert.",
-      "saveFailed": "Fehler beim Speichern des Ereignisfilters."
+      "saveFailed": "Fehler beim Speichern des Ereignisfilters.",
+      "loadFailed": "Einstellungen konnten nicht geladen werden.",
+      "retry": "Erneut versuchen",
+      "webhooksTitle": "Webhooks",
+      "webhooksDescription": "Sendet bei einem aktivierten Ereignis eine JSON-Nutzlast per POST an eine oder mehrere URLs. Der Ereignisfilter oben gilt auch für Webhooks.",
+      "webhookUrlPlaceholder": "https://example.com/webhook",
+      "addWebhook": "Webhook hinzufügen",
+      "removeWebhook": "Webhook entfernen",
+      "webhookSave": "Speichern",
+      "webhooksSaved": "Webhooks gespeichert.",
+      "webhooksSaveFailed": "Fehler beim Speichern der Webhooks.",
+      "webhookInvalidUrl": "Gültige http(s)-URLs eingeben.",
+      "docsTitle": "Anfrageformat",
+      "docsMethod": "Methode",
+      "docsContentType": "Content-Type",
+      "docsNote": "Jedes aktivierte Ereignis wird an alle URLs gesendet. Webhooks werden nicht entprellt; der Ereignisfilter oben gilt weiterhin.",
+      "editWebhook": "Webhook bearbeiten",
+      "enableWebhook": "Webhook aktivieren",
+      "webhookDuplicate": "Diese URL ist bereits konfiguriert.",
+      "cancel": "Abbrechen",
+      "webhooksEmpty": "Noch keine Webhooks konfiguriert.",
+      "deleteWebhookTitle": "Webhook löschen",
+      "deleteWebhookMessage": "Diesen Webhook entfernen? Ereignisse werden nicht mehr an diese URL gesendet.",
+      "delete": "Löschen"
     },
     "language": {
       "title": "Nachrichtensprache",
