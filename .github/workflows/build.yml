@@ -1,0 +1,61 @@
+name: Build
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - name: Build frontend
+        run: pnpm build
+
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: x86_64-pc-windows-msvc
+
+      - name: Build codeg-server (web mode)
+        run: cargo build --release --no-default-features --bin codeg-server
+        working-directory: src-tauri
+
+      - name: Build codeg (Tauri desktop)
+        run: cargo build --release --bin codeg
+        working-directory: src-tauri
+
+      - name: Package
+        shell: pwsh
+        run: |
+          mkdir dist -Force
+          cp src-tauri/target/release/codeg-server.exe dist/
+          cp src-tauri/target/release/codeg.exe dist/
+          mkdir dist/web -Force
+          cp -Recurse out/* dist/web/
+          Compress-Archive -Path dist/* -DestinationPath "codeg-v0.15.0-win64.zip" -Force
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codeg-win64
+          path: codeg-v0.15.0-win64.zip
+
+      - name: Upload to Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          gh release upload v0.15.0 codeg-v0.15.0-win64.zip --clobber
