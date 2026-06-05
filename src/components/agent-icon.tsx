@@ -250,6 +250,12 @@ const MONO_ICONS: Partial<Record<AgentType, AnyIcon>> = {
   cline: ClineMonoIcon,
 }
 
+const FALLBACK_LETTER: Partial<Record<AgentType, string>> = {
+  hermes: "H",
+  grok: "G",
+  custom: "C",
+}
+
 // Text-color versions for Mono icons
 const AGENT_TEXT_COLORS: Partial<Record<AgentType, string>> = {}
 
@@ -281,10 +287,13 @@ export function AgentIcon({ agentType, className }: AgentIconProps) {
   return (
     <span
       className={cn(
-        "rounded-full shrink-0",
+        "inline-flex shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white",
         AGENT_COLORS[agentType],
         className
       )}
-    />
+      style={{ width: "1.2em", height: "1.2em" }}
+    >
+      {FALLBACK_LETTER[agentType] ?? "?"}
+    </span>
   )
 }

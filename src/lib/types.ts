@@ -5,6 +5,9 @@ export type AgentType =
   | "gemini"
   | "open_claw"
   | "cline"
+  | "hermes"
+  | "grok"
+  | "custom"
 
 export type AppErrorCode =
   | "invalid_input"
@@ -306,6 +309,9 @@ export const AGENT_DISPLAY_ORDER: AgentType[] = [
   "gemini",
   "open_claw",
   "cline",
+  "hermes",
+  "grok",
+  "custom",
 ]
 
 const AGENT_DISPLAY_ORDER_INDEX = new Map(
@@ -325,12 +331,17 @@ export const ALL_AGENT_TYPES: AgentType[] = [
   "gemini",
   "open_claw",
   "cline",
+  "hermes",
+  "grok",
+  "custom",
 ]
 
 export const MODEL_PROVIDER_AGENT_TYPES: AgentType[] = [
   "claude_code",
   "codex",
   "gemini",
+  "hermes",
+  "grok",
 ]
 
 export const AGENT_LABELS: Record<AgentType, string> = {
@@ -340,6 +351,9 @@ export const AGENT_LABELS: Record<AgentType, string> = {
   gemini: "Gemini CLI",
   open_claw: "OpenClaw",
   cline: "Cline",
+  hermes: "Hermes",
+  grok: "Grok",
+  custom: "Custom",
 }
 
 export const AGENT_COLORS: Record<AgentType, string> = {
@@ -349,6 +363,9 @@ export const AGENT_COLORS: Record<AgentType, string> = {
   gemini: "bg-[#3186FF]",
   open_claw: "bg-emerald-600",
   cline: "bg-purple-500",
+  hermes: "bg-cyan-600",
+  grok: "bg-orange-600",
+  custom: "bg-gray-500",
 }
 
 // ACP connection status (matches Rust ConnectionStatus)
@@ -980,6 +997,9 @@ export type McpAppType =
   | "open_claw"
   | "open_code"
   | "cline"
+  | "hermes"
+  | "grok"
+  | "custom"
 
 export interface LocalMcpServer {
   id: string

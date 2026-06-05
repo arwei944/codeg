@@ -80,6 +80,9 @@ pub fn all_acp_agents() -> Vec<AgentType> {
         AgentType::OpenClaw,
         AgentType::OpenCode,
         AgentType::Cline,
+        AgentType::Hermes,
+        AgentType::Grok,
+        AgentType::Custom,
     ]
 }
 
@@ -91,6 +94,9 @@ pub fn registry_id_for(agent_type: AgentType) -> &'static str {
         AgentType::OpenClaw => "openclaw-acp",
         AgentType::OpenCode => "opencode",
         AgentType::Cline => "cline",
+        AgentType::Hermes => "hermes",
+        AgentType::Grok => "grok",
+        AgentType::Custom => "custom",
     }
 }
 
@@ -102,6 +108,9 @@ pub fn from_registry_id(id: &str) -> Option<AgentType> {
         "openclaw-acp" => Some(AgentType::OpenClaw),
         "opencode" => Some(AgentType::OpenCode),
         "cline" => Some(AgentType::Cline),
+        "hermes" => Some(AgentType::Hermes),
+        "grok" => Some(AgentType::Grok),
+        "custom" => Some(AgentType::Custom),
         _ => None,
     }
 }
@@ -234,6 +243,89 @@ pub fn get_agent_meta(agent_type: AgentType) -> AcpAgentMeta {
                     PlatformBinary {
                         platform: "windows-x86_64",
                         url: "https://github.com/anomalyco/opencode/releases/download/v1.15.12/opencode-windows-x64.zip",
+                    },
+                ],
+            },
+        },
+        AgentType::Hermes => AcpAgentMeta {
+            agent_type,
+            name: "Hermes",
+            description: "Nous Research Hermes Agent — autonomous ACP agent with memory and skill system. Install: iex (irm hermes-agent.nousresearch.com/install.ps1)",
+            distribution: AgentDistribution::Binary {
+                version: "0.15.2",
+                cmd: "hermes-acp",
+                args: &[],
+                env: &[],
+                platforms: &[
+                    PlatformBinary { platform: "darwin-aarch64", url: "" },
+                    PlatformBinary { platform: "darwin-x86_64", url: "" },
+                    PlatformBinary { platform: "linux-x86_64", url: "" },
+                    PlatformBinary { platform: "windows-x86_64", url: "" },
+                ],
+            },
+        },
+        AgentType::Grok => AcpAgentMeta {
+            agent_type,
+            name: "Grok",
+            description: "xAI Grok CLI - command-line coding agent by xAI",
+            distribution: AgentDistribution::Binary {
+                version: "0.1.0",
+                cmd: "grok",
+                args: &["--acp"],
+                env: &[],
+                platforms: &[
+                    PlatformBinary {
+                        platform: "darwin-aarch64",
+                        url: "https://grok.com/download/cli/darwin/arm64/grok",
+                    },
+                    PlatformBinary {
+                        platform: "darwin-x86_64",
+                        url: "https://grok.com/download/cli/darwin/x86_64/grok",
+                    },
+                    PlatformBinary {
+                        platform: "linux-x86_64",
+                        url: "https://grok.com/download/cli/linux/x86_64/grok",
+                    },
+                    PlatformBinary {
+                        platform: "windows-x86_64",
+                        url: "https://grok.com/download/cli/windows/x86_64/grok.exe",
+                    },
+                ],
+            },
+        },
+        AgentType::Custom => AcpAgentMeta {
+            agent_type,
+            name: "Custom",
+            description: "User-defined custom agent",
+            distribution: AgentDistribution::Binary {
+                version: "1.0.0",
+                cmd: "custom-agent",
+                args: &[],
+                env: &[],
+                platforms: &[
+                    PlatformBinary {
+                        platform: "darwin-aarch64",
+                        url: "",
+                    },
+                    PlatformBinary {
+                        platform: "darwin-x86_64",
+                        url: "",
+                    },
+                    PlatformBinary {
+                        platform: "linux-aarch64",
+                        url: "",
+                    },
+                    PlatformBinary {
+                        platform: "linux-x86_64",
+                        url: "",
+                    },
+                    PlatformBinary {
+                        platform: "windows-aarch64",
+                        url: "",
+                    },
+                    PlatformBinary {
+                        platform: "windows-x86_64",
+                        url: "",
                     },
                 ],
             },

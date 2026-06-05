@@ -231,6 +231,9 @@ pub async fn get_conversation(
             AgentType::Gemini => Box::new(GeminiParser::new()),
             AgentType::OpenClaw => Box::new(OpenClawParser::new()),
             AgentType::Cline => Box::new(ClineParser::new()),
+            AgentType::Hermes | AgentType::Grok | AgentType::Custom => {
+                return Err(AppCommandError::not_found("No legacy parser for this agent type"))
+            }
         };
 
         parser
@@ -451,6 +454,9 @@ pub async fn get_folder_conversation_core(
                 AgentType::Gemini => Box::new(GeminiParser::new()),
                 AgentType::OpenClaw => Box::new(OpenClawParser::new()),
                 AgentType::Cline => Box::new(ClineParser::new()),
+                AgentType::Hermes | AgentType::Grok | AgentType::Custom => {
+                    return Ok((vec![], None, None))
+                }
             };
             match parser.get_conversation(&eid) {
                 Ok(d) => Ok((d.turns, d.session_stats, None)),

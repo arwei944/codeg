@@ -2109,6 +2109,7 @@ pub fn read_servers_for_agent_type(
         AgentType::Gemini => read_gemini_servers(),
         AgentType::OpenClaw => read_openclaw_servers(),
         AgentType::Cline => read_cline_servers(),
+        AgentType::Hermes | AgentType::Grok | AgentType::Custom => Ok(BTreeMap::new()),
     }
 }
 

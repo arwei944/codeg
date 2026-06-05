@@ -1650,6 +1650,27 @@ pub(crate) fn skill_storage_spec(agent_type: AgentType) -> Option<SkillStorageSp
                 ".claude/skills",
             ],
         }),
+        AgentType::Hermes => Some(SkillStorageSpec {
+            kind: SkillStorageKind::SkillDirectoryOnly,
+            global_dirs: vec![
+                home_dir_or_default().join(".agents").join("skills"),
+                home_dir_or_default().join(".hermes").join("skills"),
+            ],
+            project_rel_dirs: vec![".agents/skills", ".hermes/skills"],
+        }),
+        AgentType::Grok => Some(SkillStorageSpec {
+            kind: SkillStorageKind::SkillDirectoryOnly,
+            global_dirs: vec![
+                home_dir_or_default().join(".agents").join("skills"),
+                home_dir_or_default().join(".grok").join("skills"),
+            ],
+            project_rel_dirs: vec![".agents/skills", ".grok/skills"],
+        }),
+        AgentType::Custom => Some(SkillStorageSpec {
+            kind: SkillStorageKind::SkillDirectoryOnly,
+            global_dirs: vec![home_dir_or_default().join(".agents").join("skills")],
+            project_rel_dirs: vec![".agents/skills"],
+        }),
     }
 }
 
@@ -2037,6 +2058,8 @@ fn agent_env_keys(agent_type: AgentType) -> (&'static str, &'static str, &'stati
             "ANTHROPIC_MODEL",
         ),
         AgentType::Gemini => ("GOOGLE_GEMINI_BASE_URL", "GEMINI_API_KEY", "GEMINI_MODEL"),
+        AgentType::Hermes => ("HERMES_BASE_URL", "HERMES_API_KEY", "HERMES_MODEL"),
+        AgentType::Grok => ("GROK_BASE_URL", "GROK_API_KEY", "GROK_MODEL"),
         _ => ("OPENAI_BASE_URL", "OPENAI_API_KEY", "OPENAI_MODEL"),
     }
 }
@@ -2359,6 +2382,7 @@ fn cascade_update_agent_config(
             persist_agent_local_config_json(agent_type, Some(&patch_str))?;
         }
         AgentType::Cline => {}
+        AgentType::Hermes | AgentType::Grok | AgentType::Custom => {}
     }
     Ok(())
 }
@@ -3365,23 +3389,37 @@ pub(crate) async fn acp_download_agent_binary_core(
                 ),
             );
 
-            let emitter_clone = emitter.clone();
-            let task_id_clone = task_id.clone();
-            let _ = binary_cache::ensure_binary_for_agent_with_progress(
-                agent_type,
-                effective_version,
-                &archive_url,
-                cmd,
-                move |msg| {
-                    emit_agent_install_event(
-                        &emitter_clone,
-                        &task_id_clone,
-                        AgentInstallEventKind::Log,
-                        msg,
-                    );
-                },
-            )
-            .await?;
+            // If there's no download URL but the command is on PATH,
+            // skip download and mark as installed.
+            if archive_url.trim().is_empty()
+                && which::which(cmd).is_ok()
+            {
+                emit_agent_install_event(
+                    emitter,
+                    &task_id,
+                    AgentInstallEventKind::Log,
+                    format!("{} found on system PATH, skipping download", meta.name),
+                );
+                // Detection handles the rest.
+            } else {
+                let emitter_clone = emitter.clone();
+                let task_id_clone = task_id.clone();
+                binary_cache::ensure_binary_for_agent_with_progress(
+                    agent_type,
+                    effective_version,
+                    &archive_url,
+                    cmd,
+                    move |msg| {
+                        emit_agent_install_event(
+                            &emitter_clone,
+                            &task_id_clone,
+                            AgentInstallEventKind::Log,
+                            msg,
+                        );
+                    },
+                )
+                .await?;
+            }
             emit_acp_agents_updated(emitter, "binary_downloaded", Some(agent_type));
             Ok(())
         }

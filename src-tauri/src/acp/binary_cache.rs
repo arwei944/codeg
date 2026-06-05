@@ -7,6 +7,66 @@ use crate::acp::error::AcpError;
 use crate::acp::registry;
 use crate::models::agent::AgentType;
 
+/// Find a command on the system PATH or in well-known installation directories.
+/// On Windows, `which::which` only searches the process PATH — it may miss
+/// user-level PATH additions that are stored in the registry but not inherited
+/// by non-interactive processes. This fallback checks additional locations.
+fn find_cmd_on_system(cmd_name: &str) -> Option<PathBuf> {
+    // 1. Standard PATH lookup
+    if let Ok(path) = which::which(cmd_name) {
+        return Some(path);
+    }
+
+    // 2. Well-known install locations per agent
+    let cmd_exe = if cfg!(windows) {
+        format!("{}.exe", cmd_name)
+    } else {
+        cmd_name.to_string()
+    };
+
+    let mut candidates: Vec<Box<dyn Fn() -> Option<PathBuf>>> = Vec::new();
+    candidates.push(Box::new(|| {
+        // Hermes: %LOCALAPPDATA%/hermes/bin/<cmd>
+        std::env::var("LOCALAPPDATA").ok().map(|local| {
+            Path::new(&local).join("hermes").join("bin").join(&cmd_exe)
+        })
+    }));
+    candidates.push(Box::new(|| {
+        // Hermes: %LOCALAPPDATA%/hermes/hermes-agent/venv/Scripts/<cmd>
+        std::env::var("LOCALAPPDATA").ok().map(|local| {
+            Path::new(&local)
+                .join("hermes")
+                .join("hermes-agent")
+                .join("venv")
+                .join("Scripts")
+                .join(&cmd_exe)
+        })
+    }));
+    candidates.push(Box::new(|| {
+        // Grok: %USERPROFILE%/.grok/bin/grok.exe
+        std::env::var("USERPROFILE").ok().map(|home| {
+            Path::new(&home).join(".grok").join("bin").join(&cmd_exe)
+        })
+    }));
+    candidates.push(Box::new(|| {
+        // Generic: ~/.local/bin/<cmd>
+        std::env::var("USERPROFILE")
+            .or_else(|_| std::env::var("HOME"))
+            .ok()
+            .map(|home| Path::new(&home).join(".local").join("bin").join(&cmd_exe))
+    }));
+
+    for resolver in &candidates {
+        if let Some(path) = resolver() {
+            if path.exists() {
+                return Some(path);
+            }
+        }
+    }
+
+    None
+}
+
 /// Process-local counter appended to rename-aside trash directory names. Guards
 /// against the rare case where two `clear_agent_cache` calls land in the same
 /// `SystemTime::now()` tick (Windows `GetSystemTimePreciseAsFileTime` has ~100ns
@@ -169,6 +229,11 @@ fn installed_version_for_agent(
     let agent_id = agent_cache_key(agent_type);
     let mut versions = installed_version_labels(&agent_id, cmd_name)?;
     if versions.is_empty() {
+        // Fallback: check if the command is available on PATH or in known
+        // install locations (e.g. Hermes installed via its own installer).
+        if find_cmd_on_system(cmd_name).is_some() {
+            return Ok(Some("system".to_string()));
+        }
         return Ok(None);
     }
     versions.sort_by(|a, b| version_cmp(a, b));
@@ -199,6 +264,11 @@ pub fn find_best_cached_binary_for_agent(
     let agent_id = agent_cache_key(agent_type);
     let mut versions = installed_version_labels(&agent_id, cmd_name)?;
     if versions.is_empty() {
+        // Fallback: check if the command is available on the system PATH
+        // or in a known install location.
+        if let Some(path) = find_cmd_on_system(cmd_name) {
+            return Ok(Some((path, "system".to_string())));
+        }
         return Ok(None);
     }
     versions.sort_by(|a, b| version_cmp(a, b));
@@ -248,6 +318,12 @@ pub async fn ensure_binary_for_agent_with_progress(
 ) -> Result<PathBuf, AcpError> {
     if let Some(path) = find_cached_binary_for_agent(agent_type, version, cmd_name)? {
         on_progress("Binary already cached, skipping download");
+        return Ok(path);
+    }
+
+    // Fallback: check if the command is on PATH or in a known location
+    if let Some(path) = find_cmd_on_system(cmd_name) {
+        on_progress(&format!("Found {} on system", cmd_name));
         return Ok(path);
     }
 

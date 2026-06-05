@@ -1,0 +1,1241 @@
+88f75046 # Release version 0.15.0
+814ed7f1 chore: apply code formatting and add .prettierignore
+9bfcd0c5 fix(clipboard): make copies work in non-secure web contexts
+4e614a57 feat(file-tree): add copy path context menu action for files, directories, and root
+b8a0fab4 fix(sync): drop the duplicate user message when viewing a shared conversation mid-turn
+081e546d Merge remote-tracking branch 'origin/main'
+b30efa05 fix(chat-channel): preserve event settings when the config fails to load
+9b534bd5 fix(chat-channel): render Lark card fields as plain text
+8f1a48e6 fix(chat-channel): fail closed when the global event filter is unknown or stale
+001a3dd3 fix(sync): serialize concurrent control of shared conversations
+980bbf6d feat(chat-channel): notify channels when a user sends a message
+a5168151 feat(chat-channel): deliver event notifications to webhooks
+48f66faa Merge branch 'feat/multi-client-realtime-sync'
+4eb9b8a9 feat(sync): real-time conversation sync across desktop and browser clients
+ff76f988 test(chat-channel): cover sequential permission gates on one connection
+7cd90e4e feat(chat-channel): notify channels on agent permission requests
+7299278d refactor(chat-channel): extract shared tool_detail module
+d37becf5 docs(images): update WeChat QR code images
+d14fea44 # Release version 0.14.12
+acf05f07 chore(registry): bump Claude Code to 0.41.0 and Gemini to 0.45.0
+43f69343 fix(transport): route window cast through unknown in detect test
+90b5631f fix(delegation): backfill token stats on the child sub-session reply
+c235bd4e feat(delegation): present child sub-session in a centered dialog
+aae81e1e Merge pull request #246 from mvanhorn/feat/217-tab-cycle-shortcuts
+d0da8670 feat(tabs): add Ctrl+Tab / Ctrl+Shift+Tab to cycle conversation tabs
+14093df7 fix(update): no-op file fsync on Windows where read-only sync_all is denied
+e9ddb997 fix(update): gate unix-only mode binding to silence Windows warning
+e42903a9 Merge remote-tracking branch 'origin/main'
+43a45034 fix(update): roll back and relaunch the server under a single held lock
+4e107ea6 fix(update): swap the web bundle atomically so it is never absent mid-update
+433d8610 docs(update): document in-place upgrade rollback, supervise mode, and Docker image drift
+d064d4e6 feat(update): add a manual rollback action to server update settings
+f474cdbc feat(update): add a local server update-status endpoint
+499ecac5 fix(update): abort the upgrade when the pre-update baseline can't be read
+f96fcf44 fix(update): refuse a self-update that isn't newer than the running version
+78142f04 fix(update): read the live server version as the rollback baseline
+860ac168 fix(update): stamp the supervisor trial start before spawning the worker
+9cd86e75 fix(update): treat only a revert to the pre-upgrade version as a rollback
+9ae20bd9 fix(update): fsync the copied backup before committing its name
+d3086155 fix(update): keep the staged-upgrade marker until the trial proves it
+ac922a71 fix(update): fsync staged artifact contents before committing the swap
+19ed14db fix(update): route updates to the server in remote-desktop mode
+16e44425 fix(update): self-heal an unspawnable upgrade and harden durability
+3f55716d fix(update): confirm a server upgrade survives the supervisor trial window
+a127aaab fix(server): keep the access token stable across restarts
+dec2bacd fix(update): make server self-update crash-safe
+a479ee13 fix(update): address second-round review of server self-update
+7ce91b6f fix(update): harden server self-update per production review
+de5cf7c3 feat(update): auto-roll back a failed server upgrade in the supervisor
+810623ed feat(update): support in-place self-update for server/docker runtime
+ead48684 # Release version 0.14.11
+c196e79b fix(delegation): collapse view-session label by card width, not viewport
+7ea40713 fix(goal): keep completed goal card on theme color
+bfaffd83 fix(message): show subagent prefix and nest child calls in streaming agent card
+b83813da i18n(message): localize streaming agent card fallback title
+3b2cfded fix(message-input): support pasting clipboard images on Linux
+48455ebe fix(message): align loose ordered/unordered list markers with item text
+d25e1882 feat(delegation): let get_delegation_status wait_ms=0 block until terminal
+4b4d439f fix(message): render ordered markdown list markers
+bc02ef99 perf(message): memoize conversation timeline and virtualized thread
+d38fb63e fix(goal): render Codex goal calls as active cards
+82b796d0 fix(delegation): correct history-reload status badge and grouping
+57929291 # Release version 0.14.10
+b9676361 docs(images): update WeChat light and dark QR codes
+621895e6 feat(delegation): merge consecutive status poll cards
+a843e286 fix(parser): show prompt-expanding slash commands as Claude user turns
+aab09851 # Release version 0.14.9
+b2f4014b fix(settings): persist codex env and config sequentially when switching provider
+def62bba feat(delegation): inline collapsible cards for status/cancel tools
+1793e0be feat(delegation): configurable per-session byte budget for completed results
+5e3d981b feat(delegation): reduce the card to status + open-conversation only
+2c2b4af7 feat(delegation): re-seed running delegation bindings from the snapshot
+264150b5 feat(delegation): recover running delegations from the session snapshot
+b4569899 fix(delegation): tombstone stale keyed tool-call entries on terminal ACP status
+97216253 fix(delegation): carry agent_type on DelegationCompleted for missed-start parity
+6dce57c0 test(delegation): align e2e wire assertions with async DelegationTaskReport
+428dff1d fix(delegation): emit DelegationStarted on the parent stream for web/server parity
+bd99d56d style(delegation): apply rustfmt and fix doc_lazy_continuation
+57418a3f refactor(delegation): drop unused child_conversation_id from chat-relay report view
+0ae2233c Merge branch 'main' into cv-mcp
+20b74236 docs(delegation): describe codeg-mcp as exposing async delegation tools
+3ffe3d06 feat(delegation): run sub-agent delegations asynchronously
+1706e932 Merge remote-tracking branch 'origin/main'
+f5e788d3 feat(hyperframes-launcher): add HTML-to-video project launcher
+b2b2b588 # Release version 0.14.8
+0f863ef6 chore(workspace): lower workspace window minimum width to 400
+d48d7a02 Merge remote-tracking branch 'origin/main'
+7e465afe fix(shadcn-launcher): open the new project in the workspace and close the launcher
+6fde056d fix(shadcn-launcher): keep the preview loading overlay from sticking forever
+6cd1f952 fix(delegation): resolve setup-window cancel races by arrival order
+2a8f3211 fix(delegation): tear down mid-setup child agents on parent cancel
+99657a5a fix(delegation): preserve tool_call correlation across turn cancels
+44415f56 fix(delegation): bind parallel sub-agent delegations to their own tool calls
+0520d039 # Release version 0.14.7
+8594e20b chore(acp): bump claude-code 0.39.0
+c3e8da1a feat(acp): support installing agents by a custom version
+d0c09531 # Release version 0.14.6
+53283b53 feat(models): support Claude Opus 4.8 in settings placeholders
+402ca7e0 fix(workspace): disable resize handles when adjacent panels are closed
+0a51380d chore(acp): bump claude-code 0.38.0, opencode 1.15.12, gemini 0.44.1
+65586161 # Release version 0.14.5
+2c57170e fix(delegation): eliminate stale tool_call_id mis-binding across the full claim lifecycle
+073df9ab fix(message): disambiguate React keys for grouped tool-call items
+9761ee19 fix(delegation): harden pending tool_call_id queue to prevent missing view-session button
+01d3696b chore(delegation): lower default max delegation depth to 1
+b439255b # Release version 0.14.4
+c43504b7 feat(delegation): surface read-only viewer on reloaded conversations
+61d2b605 feat(delegation): add read-only viewer for sub-agent conversations
+fed85c79 refactor(conversation): place reload entry below export in context menu
+acf38a64 fix(workspace): exit files-maximized when activating conversation pane
+df1af125 feat(delegation): default multi-agent collaboration to off
+88713c02 Merge remote-tracking branch 'origin/main'
+5a54da8c Merge remote-tracking branch 'origin/main'
+5593b569 fix(export): route conversation export through Tauri save dialog on desktop
+d077df11 fix(workspace): surface dirty refusal via stale flag in apply/reject
+775971f8 fix(workspace): atomic dirty guard and etag-gated git base writes
+ad257e2e fix(workspace): surface external-delete errors and decouple git base refresh
+31e3e938 perf(workspace): envelope-driven change detection with prefetched apply
+f78619ce fix(workspace): detect external changes for non-active file tabs
+1277a457 fix(workspace): non-destructive file tab switch with explicit reload
+9ec49161 fix(delegation): drain broker on terminal error and gate non-terminal teardown
+f2a15698 fix(delegation): surface child terminal error and skip non-terminal cancels
+a09f3850 refactor(workspace): apply --no-optional-locks to all read-only git queries
+d68a3467 Merge pull request #215 from Kwensiu/fix/gitlock
+e3451852 # Release version 0.14.3
+2dd99173 docs(readme): add MyClaw.ai as top sponsor banner
+ff184e8a docs(readme): add Sponsors section with Compshare
+90812b4c feat(workspace): add maximize toggle for file pane
+6a1c4076 fix(delegation): add agent_defaults spread to Windows e2e tests
+a705a332 feat(delegation): per-agent default options for sub-agent spawn
+a110d4cf feat(delegation): replace timeout with MCP-native cancellation
+9784f08a fix(workspace): use --no-optional-locks for watcher git commands
+f7c155ef docs(agents): add codeg-mcp binary to project guide
+e1e6ce63 docs(readme): document codeg-mcp companion in quick start
+392ad027 docs(readme): highlight conversation aggregation and multi-agent collaboration
+f962e09d docs(readme): refresh overview media and section layout
+8f475b42 docs(readme): update multi-agent workspace descriptions
+50ec209a # Release version 0.14.2
+3b5bdfa5 fix(delegation): preserve zero-timeout tool schema copy
+12e1346c docs(delegation): clarify sub-agent tool schema descriptions
+ddd862ea feat(delegation): support unlimited delegation timeouts
+95f0501a feat(delegation): parent-pid watchdog in codeg-mcp
+0472eee1 fix(installer): stop codeg-mcp processes before upgrade
+b4e46d28 # Release version 0.14.1
+2d393593 fix(delegation): use \\.\pipe namespace for Windows named-pipe broker
+1ceb6235 # Release version 0.14.0
+bccb5889 Merge pull request #207 from xintaofei/mcp
+a700cff3 fix: satisfy windows clippy io error lint
+dfbe6564 fix(tabs): activate neighbor after closing active tab
+907df4ca style(tauri): format Rust sources
+735f6de4 chore(acp): update Codex and OpenCode registry versions
+d167344b fix(chat): constrain composer to message column
+222cde4f style(delegation): align sub-thread status badge with tool-call badge and center chevron
+bd7ef8e6 fix(chat): drop attached-frame fill and tighten composer outer spacing
+ec50f2f3 fix(chat): scope input focus ring to composer and tighten attached frame
+9a7ad568 test(delegation): localize delegation status labels and cover real emitter fanout
+c13739ee refactor(settings): add General page consolidating terminal, rendering and delegation
+3c92496a refactor(delegation): granular child-failure codes and non-blocking parent cancel cascade
+3780e86e fix(delegation): emit completion on every terminal path and cascade cancel to children
+8c11f9ee fix(chat): refine conversation input styling
+66fb6a17 fix(delegation): unify delegate_to_agent rendering across MCP hosts
+0767b6a4 fix(delegation): ship codeg-mcp companion across all distribution channels
+01b9a0a5 feat(delegation): live append-only result stream + snapshot rebinding
+6463c8b7 fix(delegation): recognize delegation regardless of host title rephrasing
+c92e6085 refactor(delegation): tighter card header + outcome-first expanded body
+f8214426 refactor(delegation): standalone card, expanded-only outcome with markdown
+f5b16142 fix(delegation): visible settings, MCP _meta fallback, agent card UI
+b3411369 feat(delegation): settings UI, chat-channel relay, full i18n
+2b1811b1 feat(ui): inline DelegatedSubThread + delegation event binding
+5f39ce38 feat(conversations): include_children filter + list_child_conversations
+1df13a57 feat(acp): wire delegation listener, MCP injection, lifecycle, settings end-to-end
+450e7fc1 feat(acp): codeg-mcp companion binary with stdio MCP + UDS broker round-trip
+eeb01202 feat(acp): DelegationBroker with depth check, timeout, parent-cancel cascade
+c80ed6d9 feat(acp): introduce ConnectionSpawner trait and DelegationLink carrier
+ecb9186e feat(acp): delegation event variants and parent-binding fields on ConversationLinked
+5cecab0c feat(db): add parent_tool_use_id and delegation_call_id for sub-agent delegation
+3e0cbbad feat(editor): expand Monaco language detection coverage
+4b9677e6 # Release version 0.13.10
+1878275d chore(rust): format backend sources
+0ead359b chore(acp): update agent registry versions
+ae73646d feat(acp): support Claude Code ACP compatibility
+b8a0403d chore(acp): upgrade Claude Code ACP wrapper
+255d1b3e fix(pet): clear waiting animation right after permission response
+8c6530f2 fix(chat): harden direct link opening for production
+ac2045c9 feat(chat): open message links directly
+b5fb9788 Merge remote-tracking branch 'origin/main'
+1b4ac178 refactor(workspace): automate workspace mode
+602023a4 # Release version 0.13.9
+1b69e6e4 refactor(commands): clean up clippy lints in windows-only paths
+ad89111a ci(test): make rust tests cross-platform and skip windows desktop run
+21248ea4 feat(chat): restyle the welcome panel hero
+eeee55e1 ci: fix rust workflow and clippy failures
+aa144156 docs: document test commands across README, AGENTS, and translations
+b569ef9c ci: split clippy args from test args so server cell skips --all-targets
+5b0feed6 chore(test): scope vitest coverage to src/ and exclude build artifacts
+aafaabe1 test: expand suite and route web handlers through commands/*_core
+21394dc6 chore(test): production-harden the test suite
+0c05151e test: add React component tests + CI workflow
+35e9173b test: add Rust + frontend test infrastructure (Phase 1-5)
+6bceb9c7 fix(tab): harden default-agent resolution for new conversations
+eb33b93b Merge remote-tracking branch 'origin/main'
+5fac5cde fix(tab): stabilize new conversation default agent
+b0b7e850 feat(chat): redesign welcome panel
+6e7daa15 # Release version 0.13.8
+3450006d feat(sidebar): restrict default-agent menu to available agents
+f046905f feat(folder): apply default agent across new-conversation entry points
+587f86af fix(tab): inherit agentType when auto-creating replacement draft
+5cc78306 fix(panel): honor seeded agentType for new conversations
+e9b780a2 feat(tab): seed new conversation with folder's default agent
+67ee86e4 feat(sidebar): add 'set default agent' context-menu sub-item
+b474e5e7 i18n(folder): add default-agent menu strings for all locales
+c8e5fa34 feat(folder): add updateFolderDefaultAgent API wrapper
+b589de71 feat(folder): add update_folder_default_agent tauri command
+7c2bcbba feat(folder): add update_folder_default_agent web handler
+1f2c1e19 feat(folder): add update_folder_default_agent service fn
+d437682e chore(deps): inline brand icons and drop @lobehub/icons
+c681398b docs(readme): add community section and sync multilingual READMEs
+15fa0aa5 # Release version 0.13.7
+14343406 fix(settings): lock skill id input when editing an existing skill
+4aa77abc fix(acp): return up-to-date description from acp_save_agent_skill
+29a6c5cd style(settings): swap model providers and quick messages order in nav
+3acf42da chore(acp): bump claude-agent-acp to 0.36.1 and opencode to 1.15.5
+94463cce feat(chat): show skill description in $ autocomplete row
+5ebe46ae style(chat): tone down welcome hero halo and rings
+33365ec7 feat(settings): include name/description frontmatter in default skill template
+3793983d style(chat): shrink welcome hero halo and add elliptical rings
+6d7eaa65 fix(settings): honor opencode enabled_providers allowlist and backfill provider.npm
+31220e1e fix(acp): harden OpenCode sub-agent title sentinel and trim user text from logs
+e26d56db fix(acp): render OpenCode sub-agent task calls as Agent cards during streaming
+77c7663f style(chat): polish welcome hero halo and panel layout
+c9fb112b fix(settings): default opencode provider.npm to first option
+0c584e42 fix(settings): sync opencode enabled_providers when adding or toggling provider
+22d64f28 fix(model-provider): override codex OPENAI_MODEL in env_json
+dbac62a0 style(chat): tighten welcome hero vertical spacing
+62936610 feat(chat): move folder/branch picker below the input box
+6597102d # Release version 0.13.6
+54ca7aeb fix(model-provider): enforce immutable agent_type and reject cross-type bindings
+829c8438 feat(model-provider): pin to a single agent type and cascade model field
+479390d7 feat(chat): redesign welcome screen with halo hero and random tips
+b99ddfbb # Release version 0.13.5
+3a355bbd fix(acp): write codex provider base_url under [model_providers.<name>]
+2681267a fix(settings): correct claude opus model placeholder
+1ced764a feat(workspace): stream file transfers end to end
+488c5afb feat(workspace): remove file transfer limits
+9c9268c1 feat(workspace): proxy file upload and download via remote desktop
+7d14615c fix(workspace): harden symlink check and stream zip downloads
+ad145996 fix(workspace): harden upload commit and refresh tree on snapshot
+7c13949d feat(workspace): unified upload dialog with progress and cancel
+de5db36a feat(workspace): add web upload and download from the file tree
+7337669f docs: update README images
+5df4546f # Release version 0.13.4
+326aa74d fix(server): preserve uploaded attachment filenames
+29cd8c81 chore(rust): normalize source formatting
+3cf7f4bb fix(acp): implement default for connection manager
+5f911d26 Merge branch 'cv-main-vd3p36'
+07511067 fix(acp): seed saved mode on conversation mount
+3383c3cb fix(server): harden uploads and remote desktop websockets
+d11a7f46 fix(acp): apply saved selector preferences on the backend at connect
+549bf7b3 Merge branch 'cv-main'
+d5ba29af fix(uploads): unify effective data dir and scope strict-mode aborts
+90697e45 fix(uploads): unify desktop data root and add strict quota mode
+4db42291 fix(uploads): enforce hard total-size cap and surface quota config
+f9dff835 fix(acp): route remote-desktop attach frames and guarantee lifecycle DB writes
+426022c1 feat(uploads): cap total upload storage and fix Windows path navigation
+fd27f803 perf(acp): isolate per-connection lifecycle DB writes and trim dead event paths
+571a55bb fix(server): pin CODEG_DATA_DIR to the resolved data root at startup
+1fb7bf0d fix(acp): recover web session state across browser refresh via subscribe-with-snapshot
+96855a87 refactor(upload): tag attachment errors with shared i18n keys
+4ecb8db5 feat(chat): support file attachments in remote workspace mode
+efc3fbef feat(chat): support file attachments in web mode
+a0ac944d # Release version 0.13.2
+5e383ca1 fix(settings): skip rendering settings load in remote workspace
+c07b8868 Merge branch 'cv-main-vd3p36'
+f2433bbe Merge branch 'cv-main-ad73ze'
+170332de fix(remote): tombstone WS subscriptions per window instance
+07cc1018 fix(remote): fix WS subscriber race and propagate remote context to project boot
+871c3055 fix(pet): replace ambient review state with transient oneshot cue
+b364cb64 fix(remote): proxy remote workspace traffic
+d9ff1e7c style(sidebar): drop bold weight on active conversation title
+c535d870 # Release version 0.13.1
+d90cb2c9 fix(transport): prevent zombie reconnect after destroy
+7edcc8de fix(install): clean shadowing binaries when PATH is updated on Windows
+9c835eb7 fix(install): scope cleanup to true shadows and surface failures
+60ade61d fix(acp): guard snapshot hydration with source connection_id
+9e6ed472 fix(transport): recover ACP state across WS reconnects
+afcdf25a fix(transport): gate WS subscribe on server-side ready handshake
+7fa82a16 fix(install): remove shadowing codeg-server binaries on upgrade
+632547d2 fix(transport): isolate remote desktop transport from shell transport
+96146fe7 # Release version 0.13.0
+04bed512 chore(acp): bump Gemini and OpenCode versions
+9fc1faf7 chore(experts): sync superpowers v5.1.0
+75d7fe67 feat(sidebar): add new conversation header action
+17ef80d6 feat(sidebar): refine themed conversation groups
+78ac5db6 feat: add remote workspaces
+c9653958 # Release version 0.12.3
+73b19425 chore(pet): align sprite animation timing
+714d390b fix(db): isolate Tauri dev database
+98dd7ed7 fix(web): preserve session auth on command auth failures
+0e8b1fec # Release version 0.12.2
+7bc613f4 fix(gemini): support JSONL session history
+0a67f8e3 chore(acp): upgrade OpenCode to 1.14.48
+a8d63210 fix(acp): add skip-trust flag for Gemini ACP
+5522b373 feat(pet): preview pet actions in settings
+0dff9e2a feat(ui): add close button to dialogs
+c9e6cdf1 fix(chat): use K/M units for message token stats
+79c21bce fix(acp): preserve latest connection request
+c983fc21 fix(pet): use marketplace q search parameter
+6940bc55 Merge pull request #161 from pia/feat/web-service-auto-start
+14223d20 fix(tabs): suppress every synthetic child event during long-press and drag
+e45115f0 fix: address web service auto-start review
+309f2eca Merge pull request #162 from pia/feat/mobile-tab-long-press-sort
+709a0ce7 feat(window): localize dialog window titles across all supported locales
+48ed98cc fix(window): anchor dialog windows to opener instead of forcing global always-on-top
+46ce39e7 fix: optimize mobile tab reordering gesture
+c588cad9 feat: add web service auto-start setting
+9c76fe54 # Release version 0.12.1
+a60aa899 feat(pet): live-swap sprite when active pet changes in settings
+5459ddae Merge branch 'cv-main'
+9bf29c8c fix(pet): show current state when pet window opens mid-conversation
+87bf222f tune(pet): retime jumping animation to follow gravity-shaped hangtime
+c7a775bf build(tauri): skip single-instance plugin in debug builds
+e8d4f139 fix(pet): keep Running animation across conversation switches
+de263dd7 # Release version 0.12.0
+29594da9 feat(window): make settings window modal over its owner
+d28243dc style(pet): tighten marketplace dialog spacing and drop subtitle
+f4d57385 Merge branch 'cv-main'
+09438b88 feat(codex): render image generation as a first-class content block
+43ecf7b2 refactor(chat): polish assistant message footer button group
+8cb813d3 feat(window): use monochrome template tray icon on macOS
+b55a373b feat(window): hide workspace to tray on close, with safe fallback to exit
+a97e7d9c feat(chat): show assistant reply completion time in message footer
+2e343e90 style(conversations): lower tiled panel min width to 24rem
+e0b03bf8 feat(pet): broaden event reactions with oneshot animations and auto-recovery
+53d58e74 feat(pet): add online marketplace browser with one-click install
+2adbd6b4 refactor(pet): redesign manager section with collapsible UI and toast errors
+7b37acff Merge branch 'cv-main'
+73764a1e perf(pet): optimize desktop pet interactions
+7a036568 chore(acp): update Codex ACP to 0.14.0
+2cc6fa6a Merge branch 'main' into cv-main
+2d4248b0 Merge remote-tracking branch 'origin/main'
+c706a51c feat(chat): add compact assistant response actions
+a7a93aaa Merge remote-tracking branch 'origin/main'
+37c9255d feat(pet): add native context menu controls
+360e4165 refactor(updater): share proxy init, reuse HTTP client, unify error path
+663685ea fix(updater): real version check in server mode
+02f6222e i18n(chat): describe grouped read/edit tools as call counts not file counts
+00b97a83 feat(pet): responsive drag direction and looped interaction animations
+544ad8ed feat(pet): hover-driven waving and non-stealing focus
+34d2fa9f feat(pet): add Codex-compatible desktop pet with manager in appearance settings
+29c1c7bb fix(acp): inject git credential helper into agent runtime env
+b590fbdb # Release version 0.11.9
+ef558b77 style(sidebar): enlarge status badge and recolor in-progress vs review
+35ffd51b chore(acp): bump claude-agent-acp to 0.33.1 and opencode to 1.14.41
+d5c95256 feat(sidebar): add open-in submenu and path tooltip to folder groups
+746338a4 style(chat): tint streaming shimmers with theme primary
+45b396a4 style(sidebar): show agent icon with status dot badge in conversation list
+425e6502 # Release version 0.11.8
+b9c5da40 style(conversation): show active tile focus indicator
+af2bc468 style(chat): simplify tool call card accents
+07e0a488 style(chat): use theme color for tool borders
+bed7b8ac refactor(errors): route catch-handler stringification through toErrorMessage
+45ea292b fix(mcp): localize Codex entry and transport type errors
+73a31738 test(mcp): cover type normalization across Codex TOML and marketplace paths
+57312d30 fix(mcp): unify type normalization across Codex TOML and marketplace paths
+0cf70568 fix(mcp): accept streamableHttp aliases and localize error messages
+c2c2b054 fix(chat): preserve file:// links in assistant markdown so they reach the open-file dialog
+9f0143ca chore(acp): bump opencode, gemini, openclaw, cline registry versions
+62936ef2 feat(chat): group tool runs into summary pill and align multi-turn stats
+c3604c29 # Release version 0.11.7
+977dcc3a fix(chat): label cancelled conversation badge as cancelled instead of failed
+0ffc52e5 fix(chat): flip conversation to cancelled when user cancels a streaming turn
+4be001b6 fix(chat): show streaming thinking indicator and hide expand for empty reasoning
+bca5d95a Merge pull request #151 from Kwensiu/fix/acp-npx-prefix-resolution
+3024f7f3 fix(chat): resume original ACP session after reconnect on new-conversation tabs
+5bd3f2ab fix(chat): correct Claude Code agent icon hover title
+0d86274e fix(chat): surface agent turn failures instead of silent pending review
+c00b1465 fix: cache npx resolution during agent listing
+4663e6de feat(login): localize web login page across all supported languages
+979a539a fix: resolve npx acp agents from npm prefix
+d6a69d6a # Release version 0.11.6
+73feabc4 fix(chat): surface session load failure with reload and new-conversation actions
+9aa84062 feat(settings): require proxy URL when enabling system proxy
+bbc569ae fix(chat): stop drag-dropped files from leaking to inactive conversation tabs
+f5e055e5 fix(chat): stop duplicating assistant reply when turn completes
+311b39e5 feat(chat): render Codex generated images and add download action
+7bbf994b fix(chat): show reload and new-conversation actions on detail load failure
+dadd809b # Release version 0.11.5
+48026bb0 fix(chat): wrap live turn stats and hide secondary info on narrow panes
+f7477c92 fix(chat): preserve final stream chunk when turn completes
+5883bb36 fix(chat): jump instantly to bottom when first opening a conversation
+3de65e30 fix(mcp): write OpenCode MCP entries to the correct config file
+ec53b890 fix(mcp): forward MCP server config to agent sessions
+1b1ead01 feat(settings): add refresh and new-MCP buttons to local MCP tab
+415d0522 fix(chat): clamp session config dropdown to available viewport height
+93ba9fdf docs(claude): drop ACP phase-specific architecture notes
+309a9896 refactor(acp): move conversation external_id writes to backend
+8287d10e # Release version 0.11.4
+342a8172 fix(chat): keep message input scrolled to caret when content overflows
+3083b96c chore(acp): bump bundled agent versions
+2168feb6 refactor(chat): reorganize message input toolbar layout
+084986ba # Release version 0.11.3
+043dc0e2 feat(chat): auto-collapse agent tool call card on completion
+5678f288 fix(sidebar): keep cancelled conversations visible by default
+2bbeb539 # Release version 0.11.2
+a361e24f feat(chat): rename session settings trigger to agent settings and cap submenu width
+505881df feat(chat): show agent icon on session settings dropdown trigger
+fbfe11d7 style(chat): widen min tile width for tiled conversation tabs to 28rem
+ab259ca3 feat(chat): move folder and branch pickers into the message input action row
+7d066111 feat(chat): consolidate session selectors into a single cog dropdown with hover submenus
+92ccbe60 fix(acp): move conversation cancel-on-disconnect to backend lifecycle subscriber
+d7a4d624 chore(docs): remove obsolete claude ACP raw SDK message design spec
+cddcc3c9 fix(acp): raise default idle-sweep threshold to 3 minutes
+f696129b # Release version 0.11.1
+940a6f82 Merge branch 'cv-main'
+0f74c794 feat(terminal): backend-driven shell picker with custom path support
+476c2d2e fix(dialog): cap height to viewport and scroll overflow content
+034e5161 feat(chat): cap inline code block height in messages with overflow scroll
+179591ae feat(chat): clickable file paths in tool calls and green tint for write bodies
+882a81fe Merge pull request #127 from Kwensiu/feat/default-terminal-shell
+1a22de1c feat(terminal): add configurable default shell
+583afdeb # Release version 0.11.0
+21bf542a fix(workspace-state): apply cold-scan snapshot after stream restart
+1c624adc fix(workspace-state): catch up missed deltas when re-acquiring within shutdown grace
+d922ea89 Merge remote-tracking branch 'origin/main'
+516ccfb5 Merge branch 'cv-main'
+38952be2 Merge pull request #122 from pia/fix/121-mobile-web-ui-controls
+c7913b0b fix(web-server): release port reliably on shutdown and surface stale-port state
+4e71bb02 fix(web): copy-to-clipboard fallback for non-secure contexts
+f80ebc39 feat(acp): keep open-tab connections alive via frontend keepalive
+0e496a0e fix(acp): lazy-create liveMessage in reducer to survive snapshot races
+762e0aa8 fix(acp): close spawn dedup window by waiting on SessionStarted under per-session lock
+1b67a530 fix(acp): cancel-on-send-failure, fork_supported snapshot recovery, full permission tool_call fidelity
+d47288be fix(acp): tighten idle timeout, harden lifecycle subscriber, serialize prompt sends
+714ccfc0 feat(acp): idle sweep + spawn dedup mutex + close error state machine
+bf793d9c fix(acp): persist selectors_ready on snapshot to unblock post-refresh init
+3ed1c166 refactor(acp): centralize conversation status transitions on the backend
+fcc181f6 fix(acp): preserve in-flight live state on tab close+reopen mid-turn
+4da009dd docs(claude.md): document Phase 3c-3 snapshot fidelity contract
+e8fbd139 feat(snapshot-denormalize): populate tool locations and meta from wire
+ac0d0e92 feat(acp-session-state): preserve tool/plan position and meta in live snapshot
+53598ea0 refactor(acp): consolidate panel acp://event listener into context fanout
+09f7100d fix: improve mobile web controls
+5bd2be1f refactor(acp-manager): require folder_id in send_prompt_linked, remove working_dir fallback
+b56b36fc docs(claude.md): describe Phase 3b snapshot hydration + seq dedup
+7e0ebd3a docs(acp-context): correct misleading buffered-replay dedup comment
+b94cd12b feat(acp-context): dedup acp://event stream by envelope.seq
+b0629704 feat(acp-context): hydrate ConnectionState from snapshot after connect
+02aa7adb feat(acp-context): add lastAppliedSeq + HYDRATE_FROM_SNAPSHOT reducer arm
+7e2edd75 feat(snapshot): add denormalizeSnapshot helper for wire → local shape
+83d68ef1 feat(acp-context): observe conversation_linked event
+ade6b31f fix(conversation-panel): pin conversation_id on first prompt to stop dup rows
+91cdace0 feat(connection-lifecycle): forward send opts to sendPrompt
+aea9bbd8 feat(acp-context): forward folderId/conversationId opts through sendPrompt
+12227226 feat(api): accept conversationId in acpPrompt client
+b22bbe07 feat(acp): plumb conversation_id through acp_prompt Tauri + HTTP surface
+6584970a refactor(acp): tighten send_prompt_linked match + noop-test assertion
+781759d5 fix(acp): defer LifecycleSubscriber spawn into a runtime context
+9b9d7f0a feat(acp): accept caller-supplied conversation_id in send_prompt_linked
+f1286c8b chore(acp): drop stale dead_code allows on session_state types
+cbd3451b docs(claude.md): describe Phase 2 snapshot endpoints, ConversationLinked, LifecycleSubscriber
+01c2c361 test(acp): strengthen lifecycle noop tests with sentinel rows
+25aea36e feat(acp): spawn LifecycleSubscriber to persist external_id on session_started
+fab9bcfb refactor(acp): coalesce send_prompt_linked state reads + document TOCTOU
+927bb4d2 feat(acp): create conversation row on first prompt and emit ConversationLinked
+d387e802 feat(acp): add snapshot endpoints (by connection_id and conversation_id)
+e089eb42 chore(acp): drop stale dead_code allow on AgentConnection.state
+5a8635ac feat(acp): add ConnectionManager::get_state and find_connection_by_conversation_id
+e981c556 feat(acp): add ConversationLinked event variant
+3e0c7594 refactor(acp): preserve tool_call.content, deterministic ordering, i32 ids in snapshot
+fa7b0f1a docs(claude.md): describe SessionState ownership and emit_with_state
+f678042f test(acp): add snapshot/live consistency check for SessionState
+d88627f8 refactor(acp): embed SessionState in AgentConnection, wire monotonic seq
+2e91751c feat(acp): add SessionState struct with apply_event dispatcher
+ea25387b feat(acp): add session_state module helper types
+27626265 docs(claude.md): describe EventEnvelope wire shape
+687a5383 refactor(frontend): adopt EventEnvelope at acp://event subscribers
+ea40c3d5 refactor(types): align AcpEvent with backend EventEnvelope shape
+f9321b4a refactor(acp): wrap events in EventEnvelope with seq + hoisted connection_id
+af1ca868 # Release version 0.10.4
+7699b1a5 fix(settings): wrap WebView2 env override in unsafe block for Rust 1.82+
+ec07afed fix(acp): dedupe slash commands at session update mapping
+c1410437 Merge pull request #111 from MoozLee/fix/slash-command-search-main
+2e8d05ae fix(settings): use --disable-gpu for hardware acceleration toggle to align with Tauri 2 ecosystem
+8062658e fix(acp): dedupe slash command results [T-04-25-fix-slash-command-search]
+560b3083 fix(settings): use --disable-gpu-compositing to keep webview renderable
+acc0cb3f fix(settings): drop --disable-software-rasterizer to avoid white-screen webview
+f264f560 fix(acp): bypass Windows file locks when clearing binary cache
+f0bd2a28 feat(settings): add Windows toggle to disable WebView2 hardware acceleration
+5ae081e8 fix(acp): uninstall before reinstall on npx agent upgrade
+4f0684dd # Release version 0.10.3
+d0184c25 fix(acp): drain terminal readers before exposing exit status
+7f935bf6 fix(chat-input): raise toolbar collapse threshold to 34rem
+675f97af fix(acp): prevent Windows terminal hangs from pipe orphans and .cmd shims
+8405aa5d chore(acp): bump claude-code to 0.31.0
+23053923 fix(sidebar): clarify empty state when completed conversations are hidden
+6d1a87a1 chore(acp): bump codex to 0.12.0, opencode to 1.14.23, gemini to 0.39.1
+9bb3f3b8 fix(acp): defer auto-connect until historical session id resolves
+8d5ec464 # Release version 0.10.2
+89465756 fix(sidebar): restrict folder reorder drag to folder header row
+59f2fd3b Merge branch 'cv-main'
+83858376 perf(workspace-state): compress delta history, cache gitignore lookups, tighten debounce
+6a042523 fix(web-server): release port reliably on stop by awaiting graceful shutdown
+b79f06f7 fix(experts): recognize Windows junction links to central store
+51598f3b Merge branch 'cv-main'
+bcfaba10 fix(acp): prevent memory blowup from streaming terminal tool output
+0e09711e feat(codex-skills): surface built-in .system skills as read-only
+e9c30761 fix(message-input): persist draft across restarts by keying on conversation id
+f8d7c896 feat(settings): place quick messages nav below agents
+7caf7303 feat(message-input): turn plus button into menu with attach files and quick messages
+61778f15 feat(settings): add quick messages management with drag-and-drop sorting
+fbe272de Merge branch 'cv-main'
+089cc7c3 feat(sidebar-conversation-list): show empty-state hint inside expanded folders with no visible conversations
+49aee458 feat(sidebar): default new folders to neutral foreground color
+46764ee5 # Release version 0.10.1
+211d5891 fix(conversation-context-bar): hide selectors divider when no attachments are present
+1148319e feat(conversation-context-bar): unify selectors and attachments into a horizontal scrolling row
+e80c9e69 chore(acp-registry): bump opencode to 1.14.21 and gemini-cli to 0.39.0
+1eeb5041 feat(sidebar): add per-folder color swatch with picker and neutral conversation rail
+b7eeeb0b fix(conversation-manage-dialog): sort conversations by created_at and display creation time
+1d3dd0dc fix(icons): regenerate multi-resolution Windows ICO for crisp desktop icon
+72e56946 docs(images): update main light and dark screenshots
+7e243412 # Release version 0.10.0
+022172a9 chore(lint): clean up frontend and Rust lint issues
+1dd40d0b feat(conversation-context-bar): show descriptive tooltips for folder and branch selectors
+ba7f3c59 fix(branch-dropdown): show "No branch" label when folder is not a git repository
+ec115e5a feat(acp-agent-settings): expand OpenCode provider.npm options with additional AI SDK providers
+7aec93e9 feat(search-dialog): show active folder in search popup header
+c7cd94a0 Merge branch 'cv-main'
+50c5b12d refactor(branch-dropdown): drop worktree parent-branch merge shortcut
+c67e1458 feat(sidebar): add workspace actions to conversation list context menu
+377ae6d8 fix(command-dropdown): preserve running command status across folder switches
+e4899255 Merge branch 'cv-main'
+bcd457c8 refactor(conversation-status): share sidebar status glyphs across menus, search, and manage dialog
+5f4c26c4 fix(message-input): scale selector collapse breakpoint with appearance zoom
+f9dfc640 Merge branch 'cv-main'
+cd15813f refactor(tooltip): use native title for folder picker and sidebar more-options
+1323d3e8 fix(mode-tabs): use rem heights so workspace mode tabs scale with zoom
+d7113f6e fix(resizable): clip panel group overflow to block programmatic scroll shift
+02434b6e refactor(sidebar): align folder and conversation rail on a shared axis
+6665b190 fix(sidebar): prevent sibling folder overlap and nudge conversation rail
+35265c76 fix(shadcn-launcher): point preview iframe to radix/preview-02
+5ea81240 fix(theme): use neutral sidebar primary for grayscale dark themes
+f1ce7179 feat(sidebar): reorder folder groups by drag and persist sort order
+2dbdaa9c feat(branch-dropdown): add switch-to-branch entry for local and remote branches
+3030bb79 feat(conversation-detail): auto-scroll active tile into view and theme its highlight
+7a03cfff fix(branch-picker): strip remote prefix when checking out remote branches
+5ac9cee2 feat(sidebar): add conversation sort mode toggle with created-time default
+8ef29680 refactor(sidebar): shrink conversation status badges to match folder count pill
+b74f698c fix(scroll-area): raise overlay scrollbar z-index to prevent occlusion
+aea652af refactor(sidebar): tighten list padding and round conversation and folder rows into pills
+8095a75b fix(conversation-detail-panel): keep tab subtree mounted across tile-mode layout switch
+c11a5792 fix(conversation-context-bar): exclude removed folders from folder picker
+44402496 refactor(conversation-context-bar): slim folder and branch pickers to selection only
+d26c0b91 fix(sidebar): hide folder groups after removing from workspace
+1904013d refactor(sidebar): emphasize active-tab conversations via rail color and status icon
+1d40308f refactor(sidebar): simplify folder header styling and fix arrow pixel alignment
+10922dd7 fix(acp): reconnect agent when folder selector switches working directory
+d3d3a662 fix(tabs): show "new conversation" title for draft tabs on hydration
+5dd1deb9 fix(transport): replace Tauri listen() to avoid unlisten race crashing on WKWebView
+3f3a3258 fix(sidebar): compute sticky folder offsets from uniform item height to avoid NaN scroll height
+78caf4d8 refactor(sidebar): always render folder groups regardless of conversation count
+f0b3ec20 fix(folders): add open_folder Tauri command for path-based opens
+c691fb0c feat(workspace): add no-folder empty states and gate folder-only actions
+14fb231d feat(sidebar): add conversation management dialog with filtering and bulk actions
+ae88b225 refactor(sidebar): scope folder-header menu to per-folder new/import, drop import from card and blank-area menus
+fc174d86 refactor(conversation): add horizontal scrollbar and min width to tiled tabs
+72b8817b refactor(sidebar): highlight expanded folder and add per-folder new-conversation button
+f3bdf947 feat(title-bar): add folder-actions menu and branch dropdown with git operations
+08fb5087 refactor(branch-picker): fix popover corner radius, remove local branch delete, move new-branch to top
+67c83790 refactor(workspace): remove welcome page and render conversation panel directly
+eec47b3b refactor(title-bar): move sidebar toggle to left and swap terminal/aux-panel order
+1bf2c2af refactor(tabs): drop sidebar count and terminal-tab folder badge, show folder in tab tooltip
+dd2b542d refactor(tabs): remove close-folder-tabs and reveal-in-sidebar menu items
+b77842ee fix(conversation): derive ACP working dir from tab folder, not active folder
+753e312c fix(workspace): resolve folder lookups against all folders for branch and file tree
+256ebb73 fix(sidebar): guard virtualizer itemSize against non-finite zoom level
+dc75020e refactor(chat-input): embed conversation context bar inside input container
+e567181b fix(sidebar): center guide line under folder chevron and tighten list paddings
+7a6e1909 fix(sidebar): align title/folder/item start position and stabilize status icon rendering
+f0d530e1 refactor(sidebar): streamline conversation list with completed filter and expand toggle
+58b48e2b Merge branch 'main' into one-folder
+a2333e6b # Release version 0.9.5
+98792a69 feat(message-input): add search box to slash-command popups
+692b700c fix(file-tree): invalidate both cached target and ancestor, skip collapsed refetches
+baf3b6e8 fix(file-tree): keep aux-panel tree in sync with filesystem changes
+c825291b chore(acp): bump claude-agent-acp to 0.30.0 and opencode to 1.14.19
+d9323d73 refactor(workspace): migrate from per-folder windows to single-window workspace
+10801bf3 # Release version 0.9.4
+ce289e64 feat(terminal): add word/line cursor shortcuts for shell line-editing
+0fa2a089 feat(appearance): apply UI zoom level to terminal and Monaco editors
+eeeee214 fix(settings): move content padding inside scroll areas to keep inner borders visible
+b2ca2c2e refactor(git-error): drop locale-specific not-a-repo patterns
+94ebfaab fix(process): apply C.UTF-8 locale across platforms for child processes
+527dfc48 # Release version 0.9.3
+95a0c527 fix(git): restore non-repo fallback and refine repo preflight errors
+b17328b0 perf(workspace-state): tighten watch debounce to 1s and max batch window to 3s
+cc79d62b fix(git): surface non-git-repo as a typed error and align all panels via workspace state
+cf9573c0 fix(web-auth): url-decode token query param for websocket auth
+ff9fbad5 fix(chat-channel): use session agent in responding indicator and localize command messages
+dcaa4b4f # Release version 0.9.2
+0048126d feat(settings): render update release notes as markdown
+07ef3764 refactor(message): shrink agent card max height and localize running indicator with spinner
+75c2dd4c fix(settings): use randomUUID helper with getRandomValues fallback for non-secure contexts
+ff488106 fix(workspace-state): keep git-presence flag and branch poll in sync with runtime state
+7ef8d84d fix(workspace-state): stop resync loop on non-git folders and allow retry for degraded watcher
+c5c2bdd3 # Release version 0.9.1
+6e477661 feat(status-bar): compact large token counts with K/M units in usage popover
+0e602163 chore(acp): bump claude-agent-acp to 0.29.2, opencode to 1.4.11, gemini-cli to 0.38.2, openclaw to 2026.4.15 and cline to 2.15.0
+fd104941 feat(web-service): allow custom access token with persisted port and localized start errors
+32b4c885 feat(conversation): add copy text context menu action with preserved selection
+e86682dc chore(acp): bump claude-agent-acp to 0.29.1 and opencode to 1.4.8
+5bb4c1cb feat(chat-channel): annotate Weixin channel badge with iLink reconnect hint tooltip
+9abb85b8 fix(chat-channel): detect Weixin auth failure via errcode during connect verification
+0b102f01 # Release version 0.9.0
+aedf94c4 fix(ui): suppress streaming Agent partial content to avoid duplicate prompt display
+7a92f3ee fix(acp): clear Claude API retry banner when streaming content resumes
+3e30ab7d fix(parser): harden Agent subagent state machine, file matching, query performance and streaming child grouping
+73a910bb fix(ui): clean streaming Agent result output by unwrapping JSON and stripping task_id prefix
+4f41a217 feat(settings): add xhigh reasoning effort level and update Claude Code model placeholders to claude-opus-4.7
+834340e5 feat(acp): forward meta/locations fields and use parentToolUseId for precise Agent child grouping
+6763814a chore(acp): bump claude-agent-acp to 0.29.0 and gemini-cli to 0.38.1
+4189aa04 feat(ui): render streaming Agent tool calls as Agent cards with nested child grouping
+488b0c2e feat(parser): render OpenCode task as Agent cards with nested tool calls
+68142651 feat(parser): render Codex CLI spawn_agent as Agent cards with nested tool calls
+e36ba362 fix(ui): render Agent prompt as markdown and add max height to expanded card body
+4c36da8e fix(ui): prevent duplicate error display in Agent subagent card
+9f82fdf3 feat(ui): add dedicated Agent subagent rendering with nested tool call display
+ffdc0019 fix(ui): replace Codex icon to remove opaque white background
+3ebb18bd # Release version 0.8.9
+17f4ee88 fix(process): use semver-aware sorting for Node.js version selection
+045411b8 fix(process): harden Node.js path discovery for production readiness
+9adff116 feat(process): comprehensive cross-platform Node.js path discovery
+7a6a9d16 Merge pull request #75 from Kwensiu/fix/windows-acp-node-detection
+4abc198f Merge remote-tracking branch 'origin/main'
+04eff14c fix(settings): remove ineffective max reasoning effort level for Claude Code
+3b331b15 fix(ci): replace softprops/action-gh-release with gh CLI for server asset upload
+2f59d900 fix(windows): improve fnm Node path discovery
+8d0b0a29 # Release version 0.8.8
+d163e424 feat(settings): add ChatGPT OAuth device code login for Codex CLI
+75246134 fix(ui): sharpen dialog rendering with flex centering and stronger ring
+e9dd0db6 chore(acp): bump bundled agent versions in registry
+2cec4625 feat(chat): stream partial tool output during live agent response
+189399e5 ci(release): use softprops/action-gh-release for server asset upload
+d81d7644 # Release version 0.8.7
+f9010634 fix(acp): stop stripping auto config option for Claude Code
+2da2378a feat(settings): add reasoning effort level for Claude Code
+503b149d feat(settings): use overlay scrollbars for sub-page scroll areas
+b46db2f1 feat(settings): add Enable Fast toggle for Codex service tier
+a6f80088 feat(skills): support folder-scoped skills in agent sessions
+31489663 fix(folder): prevent branch submenu from being clipped in scroll area
+f3630ba4 feat(folder): add commit reset action in git log
+66549ce2 feat(folder): add Add to session actions in changes menus
+11b6a4f0 # Release version 0.8.6
+98fc75e5 fix(folder): add sidebar blank-space conversation actions
+570b142e fix(folder): align file workspace tab bar height
+0557eab1 refactor(folder): remove workspace debug logging from aux panels
+b5e8fd8a feat(folder): unify workspace state streaming for tree and git panels
+90e8bb64 fix(folder): prevent stale file watch subscriptions in aux tabs
+9f154012 fix(folder): keep mobile sidebars closed on initial load
+7808a5f0 feat(acp): notify when permission approval is requested
+f9c08873 perf(chat): reduce input rerender overhead in conversation shell
+f9923df1 feat(acp): surface Claude API retry state in chat input
+77e46d80 chore: ignore superpowers docs
+180d2bb3 docs(spec): add Claude ACP raw SDK message support design
+12981d67 chore(acp): sync Claude and Gemini ACP registry versions
+ef879190 fix(windows,linux): reduce dark mode white flash on window open
+8dad0367 # Release version 0.8.5
+be045eec fix(macos): update TRAFFIC_LIGHT_Y
+743aab5b # Release version 0.8.4
+0a39e1da fix(windows): normalize Windows file paths with leading slash and add i18n to link safety dialog
+b76dc63e perf(file-watch): increase debounce and batch window to reduce event pressure
+c4b3963c Merge remote-tracking branch 'origin/main'
+273a8cd7 fix(macos): detect untracked file deletion via Finder as remove event
+343cb54a Merge remote-tracking branch 'origin/main'
+96acd603 perf(frontend): optimize ACP tool call output handling to reduce CPU and memory pressure
+268b33d2 fix(macos): update TRAFFIC_LIGHT_Y
+8fefad14 # Release version 0.8.3
+6ebfa2b7 fix(i18n): add ellipsis to reasoning thinking label across all locales
+917ff9a6 fix(frontend): fix find widget tooltip flicker, clipping, and close button alignment
+41b28001 fix(frontend,macos): reduce dark mode white flash on window open
+e05ae764 fix(macos): persist zoom level to DB so traffic lights use correct position on launch
+17bae372 fix(macos): adjust traffic-light Y baseline from 18 to 17 for better vertical alignment
+7d4224e0 # Release version 0.8.2
+5038e352 fix(frontend): restore os-theme-codeg scrollbar theme lost during merge
+0f7286b8 fix(frontend): prevent body OverlayScrollbar from intercepting message list scroll events
+1554425b feat: show real-time download progress bar for app updates
+a763adaf feat: stream real-time progress for agent SDK install/upgrade/uninstall
+6c69f432 docs: remove OverlayScrollbars migration design spec
+290ce14f fix(frontend): remove inner padding from file tree container
+ee605365 Merge commit 'b1bfc244d10627598f5fb533e62eb86bf166fd98'
+0fafe782 feat(frontend): replace native scrollbar styling with OverlayScrollbars
+b1bfc244 feat(frontend): replace native scrollbar styling with OverlayScrollbars
+ad50cc28 docs: add OverlayScrollbars migration design spec
+db6da4ae fix(frontend): remove scrollbar-gutter and restore padding for scroll containers
+25def31a fix(windows): force UTF-8 encoding for all spawned child processes
+843cf8df feat(macos): set traffic-light position via Tauri builder API and sync with zoom
+883fb64d # Release version 0.8.1
+f0e0196d fix(frontend): remove explicit primary color from input bar controls
+9ab090a2 fix(acp): avoid false-positive comment detection on URLs in opencode.json
+fbcfa3fb chore: add .docs to gitignore
+023e4c55 fix(acp): pin @latest for all plugins and enable button when only floating versions exist
+4397b0ea feat(acp): auto-pin @latest plugin specs to installed versions after install
+6459e528 fix(acp): use XDG paths for opencode config/cache instead of platform-native dirs
+21800f25 style(acp): fix clippy warnings in opencode_plugins
+6d035101 feat(i18n): add opencode plugin management translations for 10 languages
+40e1483a feat(frontend): integrate opencode plugin modal into preflight UI
+ebf02812 fix(frontend): use correct i18n namespace prefix for opencode plugin modal
+6da3a6cc feat(frontend): add OpencodePluginsModal component
+185ba392 feat(frontend): add usePluginInstallStream hook
+4ff339d9 feat(frontend): add opencode plugin types and API methods
+99694522 feat(acp): add opencode plugin list/install/uninstall commands and routes
+8c807b62 feat(acp): integrate opencode plugin check into preflight
+09017589 feat(acp): implement install_missing_plugins and uninstall_plugin
+26cf618b feat(acp): add resolve_bun_binary and atomic_rewrite_opencode_json helpers
+c5d5f854 feat(acp): implement check_opencode_plugins detection
+8c775d29 feat(acp): add opencode_plugins module with types and parse_plugin_spec
+1c173829 fix(acp): harden session-page connection and localize backend errors
+5bda7d06 fix(experts): handle Windows junction removal when unlinking skill entries
+d92cb8d6 chore: bump ACP agent SDK versions in registry
+eb6933f2 # Release version 0.8.0
+c34eb84c fix(settings): default to appearance section instead of system
+b06e8d5f chore(docs): remove .docs directory
+c8dfd003 feat(appearance): add theme color picker, zoom level selector, reset button
+92b8a972 fix(i18n): restore pre-existing AppearanceSettings translations
+87f1f686 i18n(appearance): add theme color, zoom level, and reset translations
+a5cd1ce2 feat(appearance): wire AppearanceProvider and FOUC script into root layout
+ecff8832 feat(appearance): add AppearanceProvider and use-appearance hooks
+fc457725 feat(appearance): add 11 shadcn theme color presets to globals.css
+4b2e6d18 refactor(appearance): migrate base theme tokens to data-theme="neutral"
+2d5b71bf feat(appearance): add FOUC prevention inline script
+5298830f feat(appearance): add theme presets constants module
+28f866e8 docs(dev-design): add appearance enhancement implementation plan
+ab49ff43 docs(dev-design): add appearance settings enhancement design
+328884c8 # Release version 0.7.2
+3901c405 fix(chat): stop plan in-progress spinner when agent is not streaming
+4ba74a06 fix(chat): support mid-text slash trigger and keyboard scroll in autocomplete
+b97efb5f feat(chat): show skills list on $ trigger for Codex instead of experts
+1bb86241 fix(chat): restore ~/.agents/skills/ as additional Codex skill dir
+18887d77 # Release version 0.7.1
+1eb9b487 feat(settings): add Skills toggle for Codex CLI and improve config editor UX
+19979d50 fix(chat): use ~/.codex/skills/ for Codex expert symlinks and keep expert button always enabled
+ade59f47 fix(chat): query expert skills via symlinks and use $ prefix for Codex
+e4eb7f67 fix(chat): preserve Gemini CLI history sessions on reopen
+3dfa9135 fix(settings): fix Gemini CLI model edit resetting provider fields and not persisting
+21bbb549 # Release version 0.7.0
+85218b01 docs(readme): add acknowledgments section for LinuxDO and ACP
+2d42fa97 fix(chat): raise input selector collapse breakpoint to 480px
+0b6a013f fix(chat): harden experts menu selection and viewport fit
+b63fe3f8 feat(chat): add experts menu to message input toolbar
+b8760223 i18n(settings): translate Agents nav label in zh-CN and zh-TW
+5b613dad feat(experts): add built-in expert skills with per-agent activation
+64d4e9c9 fix(ui): increase container query breakpoint for input selector collapse
+3290951b Merge remote-tracking branch 'origin/main'
+6c48c7bd docs: update readme
+4277f88c # Release version 0.6.12
+8ef9c8a9 chore: update pnpm-lock.yaml
+150b9276 fix(ui): unify scrollbar styles across scrollable containers
+56cd2078 fix(ui): add max-height limit to commit message textarea
+98691c1d fix(ui): add flex container to sidebar wrapper to enable conversation list scrolling
+a02af51f # Release version 0.6.11
+2da29136 fix(ui): add katex package to fix build failure on missing CSS import
+6d199c9f # Release version 0.6.10
+0f38b8ee fix(ui): override Python monarch tokenizer to fix triple-quoted string highlighting
+c3671173 fix(ui): add KaTeX CSS and normalize LaTeX math delimiters for proper formula rendering
+0b866edd chore: bump ACP agent SDK (Claude code, OpenCode) versions in registry
+55aadb3b # Release version 0.6.9
+923303f5 feat(install): add version detection and upgrade support to install scripts
+8d97ba6f feat(ui): upgrade @lobehub/icons to v5 and update agent icon colors
+768d1326 feat(ui): add responsive layout support for mobile and small screens
+dd659dca # Release version 0.6.8
+04013192 fix(settings): update chat channel icons to Play/Square and SendHorizontal
+94946bbe chore: bump ACP agent SDK versions in registry
+ad3f393e fix(settings): reorder nav menu to place Agents below Skills
+8362bdf2 fix(settings): limit model provider agent types and adjust card layout
+faf8ff07 feat(settings): add model selection combobox for OpenCode agent configuration
+a3d5335e feat(settings): protect model provider deletion and cascade credential updates
+4245df2f fix(settings): improve codex CLI auth mode switching to preserve auth.json keys
+b64976e4 feat(settings): refactor agent auth modes and add model provider authentication
+d28c54a0 fix(settings): reorder nav menu to place model providers after skills
+ba192996 feat(settings): add model provider management with full CRUD support
+63596512 feat(chat): add slash command dropdown button in message input toolbar
+576944ac # Release version 0.6.7
+32a1c5ad fix: improve error message when exporting long conversations as image
+40d0a4b9 fix: disable "auto" config option for Claude Code to prevent errors
+ac0d849a chore: upgrade sacp to 11.0.0 stable and agent-client-protocol-schema to 0.11
+56d6db78 chore: bump ACP agent SDK versions in registry
+c06e8549 feat: add favicon for web/server mode browser tabs
+4c36369d feat: add export conversation to image, markdown, and HTML formats
+1282dcee feat: add copy button on hover for user messages in conversation
+c1158bf6 # Release version 0.6.6
+743b2a97 docs: update AGENTS.md and CLAUDE.md with enriched project documentation
+858ea9d1 fix: fix terminal not opening in Docker and slim down Docker image
+ae93cc06 fix: optimize communication flow diagram icons and layout
+ea3b20b2 fix: update run button state when terminal tab is closed directly
+9396127c feat: add @ file mention support in chat input and unify directory attachment
+e87f930e # Release version 0.6.5
+4f394ea5 fix: use randomUUID fallback for non-secure contexts in terminal-context
+e7bd12e1 fix: sync run button state with terminal process via centralized exit tracking
+ef94687c # Release version 0.6.4
+236f0ed5 Merge branch 'main-fix'
+efd8e110 features: add commit and push option to git commit window
+9b50d752 fix: skip rendering img element when src is empty in image preview dialog
+f23ed126 feat: add click-to-preview for image attachments in chat
+2a3b4b19 Merge pull request #54 from isYangs/main
+d3d53c8b docs: add animated communication flow diagram to README
+1287dab3 docs: add iLink (Weixin) to supported chat channels in README
+b2d10fa0 optimize: terminal spawn lifecycle to eliminate output race condition
+d0e0aad5 optimize: WeChat QR code auth flow and channel reliability
+03a6f8b5 Merge remote-tracking branch 'origin/main'
+92dd5b1b fix: disable macOS overscroll bounce
+0ef36ee9 optimize: WeChat channel message handling and error resilience
+8050e30a features: supports WeChat channel
+a34d14bf Release versioin 0.6.3
+b4aaebeb docs: update chat channels section with session interaction and new commands
+46c8874f Merge branch 'main-fix'
+098c9adb optimize: channel tool call details, permission context and stop reason i18n
+b23f6a5a fix: enable inline math formula rendering with single dollar signs
+ce951482 fix: truncate_title panic on multi-byte UTF-8 strings
+d76dc716 optimize: Enhanced session command processing logic
+adb58296 optimize: channel Message Commands — Multilingual Support and Prefixes
+05214d09 Merge remote-tracking branch 'origin/botwork'
+925d068b Release version 0.6.2
+4f8b99e5 Merge branch 'main-fix'
+3a5d720c optimize: session list loading
+058245c2 Merge branch 'main' into main-fix
+c983779d fix: resolve real-time update issue in tiled view with multiple active sessions
+b98f5034 Feature: Supports remote branch deletion
+c25e4062 fix lint
+245151dd 优化提交代码的处理逻辑，避免一些情况无法提交代码
+f33f658a 修复：“添加到VCS”的弹框显示了已经被git跟踪的文件
+58611a6b 消息渠道支持会话相关指令
+8d8eadb9 更新README信息
+e8f27b0c Release version 0.6.1
+967a16ae 支持配置cline的skills
+80a5f8c5 修复acp返回空用量信息导致会话中断
+296b0c78 优化MCP管理，支持所有Agent
+fafe9703 调整：web/server模式下，设置页面不显示“Web 服务”菜单项
+d5db553e 修复：提交列表的提交项是否推送远程的判断基线分支之前固定是folder的分支，而不是过滤的分支
+995d1e20 修复de.json多语言一处引号错误
+c5fe85d3 推送窗口现在会判断是否有配置Git远程仓库，显示正确的提示信息
+8937543f 修复设置页面的“消息渠道”菜单项未适配所有多语言
+c4ae6188 Release version 0.6.0
+2d5bd645 更新README信息
+4f051715 folder窗口异常处理
+b5924829 Merge branch 'channel' into cv-channel-urci3p
+13c8deee 修复node全局安装时的权限问题
+25a2bd09 Agent在实时响应中因为错误而中断时发送系统通知
+a9f6ce91 优化消息渠道的实现代码
+99c60ce4 Merge branch 'cv-channel-urci3p' into channel
+0bc47018 修复消息渠道的事件未触发
+f06360a5 消息渠道的消息支持多语言
+99b8ecab 修复窗口权限判断
+616be7bf 修复：未支持docker运行环境的必要依赖
+f2a53acc 修复错误警告
+007b52c1 精简事件管理里的事件
+edc12a0e 支持渠道、指令（自定义前缀）和事件（启用/禁用）管理
+54bab306 tg通道优化
+d18cec33 初步集成消息通道，支持Telegram + Lark机器人
+544abbd1 Release version 0.5.3
+8d393b3b 优化web/server模式下的目录选择，现在支持目录树选择，而不是硬文本写入
+9b9169f6 解决codex在会话页面有时不返回权限配置选项
+36ea3ef4 Release version 0.5.2
+f6a61311 更新README信息
+5f1ba86a 代码优化调整
+19890b3c 修复：推送窗口的提交列表识别不到在其它分支已远程推送的提交记录
+bff17f09 优化github工作流里docker镜像的构建流程
+1be12423 更新README图片
+84f6e35a Release version 0.5.1
+045ac281 修复server linux arm64构建失败
+9ad233b6 Release version 0.5.0
+9c0ea50b 调整github发布条件
+695c20b1 系统管理页面添加github信息
+c672fa78 更新README信息
+a49b59e4 支持一键安装脚本
+1cda9aa5 完善docker相关配置
+85114272 服务端运行时keyring改为文件存储
+a7f628ee 后端代码优化
+080a16f2 支持无GUI的Server运行模式
+7b73d7e1 Release version 0.4.7
+d653a207 修复：会话消息的工具调用里展开后无法显示新文件的内容
+6df6fc1a Release version 0.4.6
+cf0f514d 去掉状态栏初始化task超时设定
+aa799760 修复会话页面缓存的模式和模型没有实际生效
+02266039 增强node环境检查
+ffa7188e Release version 0.4.5 重构消息里读/写工具的显示，大大提升阅读性； 支持Cline Agent； Welcome页面支持快捷键； 优化会话页面滚动到底部的按钮样式； 调整folder顶部的终端按钮。
+53cdc0ca 更新README信息，现在支持了Cline
+32122efb 升级Agent SDK版本
+356d1fbd Cline所有Provicer都支持自定义API URL
+d75f94ac Merge branch 'main' into cline
+be3f4986 支持Cline Agent
+829e8cd1 优化文件差异的行数计算代码
+ab8a9367 优化文件编辑权限请求的差异样式
+a049db51 优化agent请求文件修改权限时的文件差异显示样式
+622d8c90 优化消息里编辑工具代码行号diff计算
+4ea89545 支持实时响应时解析读取工具的代码行号
+0ab9d46b 支持实时响应时解析编辑工具的代码行号
+75139a12 优化文件编辑工具里多hunk的显示样式
+4e5f4a38 优化编辑工具调用里多hunk场景的行号解析
+d2ef046e 文件编辑工具行号解析优化
+c0b3e9af 优化编辑工具调用的行号解析
+cb1c7211 修复右侧边栏“差异”区域统计的行数不正确
+f893d9ff Merge branch 'cv-main-z5swdp'
+d5471d2c 优化消息里的读/写工具代码样式
+8bd19738 优化消息里读/写内容显示样式
+beb6ae02 优化会话页面滚动到底部的按钮样式
+33186b2c Welcome页面支持快捷键
+e2b76132 调整folder顶部的终端按钮
+afa67380 Release version 0.4.4 修复web服务页面未处理多语言； 现在会话输入框会记住用户的配置选项和模型选择，避免每次都要重新勾选； 修改项目启动器主题和图表的默认值为Orange。
+39378574 修改项目启动器主题和图表的默认值为Orange
+adba9c02 修复lint问题
+10725df8 现在会话输入框会记住用户的配置选项和模型选择，避免每次都要重新勾选
+f50c85ce 修复web服务页面未处理多语言
+31a8195e Release version 0.4.3 可视化创建新项目：左侧配置面板，右侧实时预览。
+1a2fc2df 更新README信息
+c013876b 优化项目启动器的配置样式
+298ecb9f 补充项目启动器的web接口
+1518bc62 创建项目失败提示语优化
+ea77c5b0 folder增加项目启动器入口，优化窗口跳转
+3b080c80 优化项目启动器的创建功能
+06580b0c 优化启动器样式
+c2f85053 优化创建项目的后端处理
+7c89e150 初始化项目启动器代码
+77204e22 更新README信息
+9da1cbb4 Release version 0.4.2
+9141b9b7 Web服务设置页面里的访问地址、访问Token右边的按钮改为一直显示，不需要悬停
+fc0422ce 优化agent列表的滑块样式
+8037c5b9 升级claude code的sdk版本
+aacada12 优化agent列表和工作模式的选择滑块样式
+1b7c61e5 优化agent列表加载
+bf32cb71 修复build问题
+de917697 修复Agent安装/升级在特殊环境下会失败
+e56bcd6f 升级Claude Code的SDK版本
+f61f9fb0 修复所有lint警告和错误
+5e5c4833 优化agent配置选项加载逻辑
+d1eaa8f7 重构会话agent连接、初始化、加载配置流程
+484cb355 补充opencode的windows-arm64 sdk
+3ea65694 升级Claude Code、Gemini、OpenClaw、OpenCode的SDK版本
+14e0a625 更新 README 信息
+a9b0a69f Release version 0.4.1
+140819b5 修复github工作流打包
+a6e64d2d Release version 0.4.0
+3af6474b folder页面标题间距调整
+2d3d8d79 优化web服务页面样式
+20c5bb49 去掉设置窗口打开时强制置顶逻辑，以及去掉禁用其它窗口逻辑
+8026af79 优化 Web 服务页面样式
+d17148f3 设置 Web 页面标题
+c4bb0ed0 web浏览器下页面都新窗口打开
+eeaa7890 修复web端下的git配置和语言设置
+21e51dab 支持web端访问更新/web管理接口
+c4809bec folder标题适配web端
+e93b0586 支持标签页folder窗口打开
+388f9263 优化folder打开逻辑
+b330a4f9 完善web缺失的端点
+8c67bb60 commands/web结构性优化
+218055ab 完善folder页面的web接口实现
+ac09d3db 初始化web服务功能
+ae70f17d Release version 0.3.0
+ba64b222 会话部分文本表达优化
+f6a9da79 会话页面发送消息后检查当前 tab 是否为临时，如果是临时则将其转为持久tab
+0fc829a6 同步会话实时响应时的样式
+421857f2 优化folder窗口顶部的模式选择样式
+593bbe70 修复会话页面的滚动条位置在切换模式之后会丢失
+da95b9f8 优化agent选择列表样式
+9e0eb98f 优化agent选择列表样式
+4a47ec21 统一mermaid版本
+2072d0ff Suppress benign ResizeObserver loop warnings (W3C spec §3.3)
+1da1fd1e 使用Virtua替换@tanstack/react-virtual来实现虚拟列表
+7d1db72b 修复消息turn有时展开异常
+0d16d82e 优化claude code系统消息显示
+af6d8dd9 修复并行命令的执行结果没有对应到命令块
+284e45fb 重构会话页面的消息渲染，支持块级虚拟化，提升长会话性能，减少卡断
+b7df63c5 支持在软件内预览图片
+6067d5f9 修复git未跟踪文件目录显示不全
+a4805621 修改claude code模型的上下文窗口的上限为1M
+6a5c0edb Release version 0.2.13
+22c7c47d 修复新会话页面连接到未安装的agent时，后续连接其它agent没有反应了
+ccff5ac7 修复lint问题
+be08b59a 支持把目录附加到会话（临时处理）
+42e7e669 优化系统管理的布局和操作交互
+166b408b Release version 0.2.12
+73789bcb 修复推送时指定远程后的授权信息不匹配
+017b5986 支持在git推送时选择远程源
+bf388526 代码提交/推送时，右侧边栏的提交列表实时更新最新状态
+b010ef07 修复本地新创建的分支无法推送到远程
+c8af3e07 Agents管理里配置保存后通知里添加生效提示。
+30f35e3b 新会话默认agent取Agents管理里排第一的Agent，而不是注册表里面的第一个
+06bcb123 Release version 0.2.11
+a2320679 Git推送成功后现在会自动关闭推送窗口
+ad49d9e9 修复进行中会话有时无法被取消
+58ddcb81 修复会话有时无法关闭
+ba6e55ff 修复代码格式问题
+49760ccb 新会话默认连接agent列表里面的第一个agent，不再固定使用codex
+b5b70735 修复活跃的对话中会话在关闭会话tab后连接被自动回收了
+04628974 之前是会话tab激活的会话不被空闲回收，现在改为会话tab所有的会话都不被空闲回收
+06ac2be0 修复新会话可能泄漏问题
+e9cf6136 Release version 0.2.10
+dc8593c1 优化应用图标
+55ce3134 构建流水线里不同平台使用独立的缓存键
+499c43e8 修复windows下的构建警告
+382d6e50 Release version 0.2.9
+123f82bc 应用内图标更新
+ba3ccc01 重新设计应用图标
+7174ac8d 优化会话列表显示效果
+deeb91b6 代码格式
+8c60c8fd 优化会话侧边栏性能
+c566ec73 macos应用图标优化
+0c082403 设计了一个图标来替换默认的软件图标
+fcc059ed Release version 0.2.8
+8432475c 在提交区域添加“刷新”和“推送”右键快捷操作
+d9032f1c 添加git推送窗口，显示待提交列表和查看文件差异
+048b8a84 修复警告和错误
+94ca32f4 会话页面添加滚动到底部的按钮
+d0655066 发送系统通知时携带folder名
+a9e0a742 集成系统通知，并在Agent响应完成后发出通知
+e41a37cd Release version 0.2.7
+32d922a3 修复lint问题
+450b081e 重构git凭证托管，改为操作系统托管
+44f812c8 修复git凭证的使用问题
+51e9d15c 优化终端里的git操作
+6e2ae6fb Release version 0.2.6
+442f2db6 Release version 0.2.6
+06b6f43f Release version 0.2.6
+d6098df1 Release version 0.2.6
+7f5193d8 Release version 0.2.6
+7fecc83d 修复lint问题和错误
+1a7d112c 简化版本控制里面git检测交互
+3b6da2b4 修复git凭据回退逻辑
+107ee21a 优化git处理
+9e21ac43 支持快捷打开github凭据生成页面
+24f0b580 后台设置里添加非github的git服务器管理
+dac99fdc 优化git提交用户名处理逻辑
+aaad19ad 支持实时处理Git凭证
+59327f6e 增强git凭证处理
+62fab2c3 设置界面支持版本控制和github账号管理
+e801f041 Merge remote-tracking branch 'origin/main'
+e002280c 临时会话被顶替后立即断开连接
+954e5e60 非活跃连接在 1 分钟内没有活动就会被自动断开
+cd4d8161 Release version 0.2.5
+dbf39711 修复在文件编辑时一直按撤销会导致文件内容变空白
+aeddc376 优化文件树git状态检测性能
+1ce062dc 右侧边栏变更区域支持删除操作
+f8ea6949 修复windows下执行部分git命令没有带上CREATE_NO_WINDOW标识
+3ed6a0dc Release version 0.2.4
+4b09aed0 回退gemini cli版本，官网好像回退了npm，下载不到
+28c90920 过滤掉opencode的空会话
+f707d988 Merge remote-tracking branch 'origin/main'
+2712bd1f 修复警告
+f6fd3da4 放开部分文件读/写限制
+795f8e23 Release version 0.2.3
+03191b3f aux-panel代码优化
+dc461c1c 文件搜索结果里对目录图标着色
+33d70b88 支持搜索文件和目录
+f3acb45c Release version 0.2.2
+00825f2a 修复npx类型的agent的本地版本检测
+f2919210 升级claude code的sdk版本
+e3784fb3 使用rust which包来查找命令路径，解决部分电脑环境变量识别问题
+0209de17 Release version 0.2.1
+b6956b24 优化会话页面Agent响应时的时间显示
+4aa3fafe 修复消息里的代码块没有适配深色模式
+4d4c82b6 升级claude code和gemini cli的sdk版本
+f9709502 优化设置界面agents管理里面的版本检测
+9b252250 优化agent连接逻辑
+624518fb Release version 0.2.0
+c8bd69de 修改postinstall，解决js加载404问题（不影响使用）
+acbdabe9 优化Agent Connect时的agent状态获取
+ad062aef Merge branch 'main' into cv-main-xx1jlt
+ff54505b Agent管理页面手动触发预检时，先删缓存再预检
+516d2861 更新Agent支持范围
+ef3978a4 去掉agent连接时的预检步骤，正常情况下都会通过，做了无畏的工作，如果异常则连接时弹出通知和告警
+bcba0543 重构Agent管理/链接
+be152e32 给npx类型的agent也添加cmd命令行
+879d96f5 彻底删除支持不完整的Agent和相关代码，减轻维护工作量，等后续真正适配好了再加回来
+63814381 升级所有被支持Agent的SDK版本
+35f5e16c 提前检测Agent是否支持fork会话，避免无效展示和操作
+db4ff9d1 更新Readme文件
+f517f4fc 优化OpenClaw会话解析
+2240f305 支持OpenClaw会话解析
+b7804971 Release version 0.1.11
+0d913ebd 文件预览代码优化
+b4a6f703 支持markdown预览和html文件浏览器打开
+2e3090c1 输入框样式优化
+49130a61 优化会话输入框出现滚动条时的样式
+53911f1e Merge pull request #20 from xintaofei/revert-6-fix/chat-input-toolbar-overlap
+324a0a71 Revert "fix(chat): prevent textarea scroll content under bottom toolbar"
+c7e404ce Merge pull request #6 from Jasion-han/fix/chat-input-toolbar-overlap
+ffebe5bd fix(chat): align bottom mask with input content
+3ea78b15 Release version 0.1.10
+cad6e69a Merge branch 'main' into cv-main-xx1jlt
+c86ee488 修复构建错误
+4519a145 修复git在非 ASCII 字符（如中文）时的各种异常
+176785ca Release version 0.1.9： 升级Codex CLI、Gemini CLI、OpenCode的SDK到最新版本； 增强git贮藏（stash）功能，支持可视化操作； 支持git提交窗口中目录的右键快捷操作； 新建文件/目录时输入框自动获得焦点。
+d386d8c2 Merge branch 'main' into cv-main-xx1jlt
+7a3b32a9 新建文件/目录时输入框自动获得焦点
+726a20c8 支持提交窗口中目录的右键快捷操作
+d03be55c 增强git贮藏（stash）功能，支持可视化操作
+344565b1 升级Codex CLI、Gemini CLI、OpenCode的SDK到最新版本
+17aeb264 Release version 0.1.8
+85674a15 Lint 忽略 public/vs 目录
+a937e151 Release version 0.1.7
+31a4fd5b 删除分支时，如果提示分支未合并完成，支持强制删除，而不是永远无法删除
+157fa2b7 修复.gitignore一处子目录/子文件着色问题
+ca7f6ecd 支持Codex CLI的官网订阅设置
+96882482 代码优化
+838185fe 编辑器资源本地化
+f3f6f9e2 解决lint问题
+5f090796 优化会话fork代码
+f50484f0 支持在历史会话中分叉出新会话
+a85ac9dc Release version 0.1.6
+0b820594 修复合并编辑时的代码问题
+2b679b5b 优化代码冲突解决
+4129f029 支持git冲突时弹出窗口合并代码解决冲突
+c2538e37 refactor(chat): use css padding for input toolbar
+f503c251 Release version 0.1.5
+6fb6f5b6 支持快捷复制提交消息
+61361c24 优化侧边栏提交区域无数据时的显示样式
+59e3ae62 优化侧边栏变更区域无数据时的显示样式
+39b72819 解决所有lint问题
+f4f70c43 在文件树上支持右键添加文件和添加目录操作
+874591a4 优化远程Git分组显示
+767d43b0 初步支持远程Git管理
+0720aa93 Merge branch 'main' into cv-main-xx1jlt
+20df61d6 welcome窗口显示动态版本号
+0c843ec1 优化上下文事件更新的处理逻辑
+3376974d 支持文件和变更区域的根目录快捷操作
+bf14a991 支持更多的权限请求格式
+cde5be59 fix(chat): prevent textarea content under bottom toolbar
+bdbfa9ce Release version 0.1.4
+2ddc151c Merge remote-tracking branch 'origin/main'
+7fab5d4a Release version 0.1.3
+a75baec1 Merge pull request #10 from hsqbyte/feat/gemini-history-and-search-model
+2ab32c53 Merge pull request #9 from hsqbyte/feat/improve-agent-icons
+5f019607 设置运行会话ID的代码优化
+0c549003 修复右侧边栏diff区不实时显示修改文件
+a1d5a237 Merge branch 'cv-main-xx1jlt'
+1f623c0d 支持会话响应时添加队列消息
+596ac1eb feat: 扫描 Gemini history/ 目录并支持按模型名搜索会话
+b3184954 feat: add missing agent icons for cline, goose, autohand, codebuddy, corust, minion, stakpak
+080a969c 修复右侧边栏“提交”区域在没有提交记录时显示错误
+7a6ddb87 修复git仓库初始化功能
+710e452c 升级Gemini CLI的SDK版本
+6c26d067 修复重构后新会话未显示底部token用量
+8989f0ff 解决lint问题
+c8f6f87e agent响应结束后异步反显token信息
+bd545642 继续重构会话消息处理逻辑
+4e49e2f1 修复agent执行命令可能会残留子进程
+d75e0cef 支持自定义消息发送和消息换行快捷键
+f9771d6f Release version 0.1.2
+c8110aa0 优化消息中plan显示效果
+de023667 plan消息md渲染
+b452cdda 支持显示权限请求里面的plan markdown
+ccd821ba 修复会话响应结束后未修改状态
+79a22c8a 初步支持AskUserQuestion交互
+56100c67 解决pnpm lint问题
+05b96027 修复会话消息实时响应的时候未正确初始化状态
+e23bea93 解决lint警告和错误
+346fcd22 优化消息的部分call tool显示
+4c960373 Release version 0.1.1
+924a8145 更新README文件
+bdcafcac live turn显示agent图标
+c9125edb 优化会话输入框在当前会话宽度不足时的显示样式
+84e2d2bb 本地持久化“平铺显示”状态
+cf90e698 优化平铺显示下被激活会话的显示样式
+99cfc6c9 修复会话消息中的思考状态显示不正确
+ced25b61 Git忽略Claude Agent的目录
+469f4c6e 升级Claude Code和OpenCode的SDK版本
+5f2ade06 修复多会话同时进行时可能导致部分Agent响应结束后消息不可见
+f74fe371 修复新会话可能出现响应不显示的情况
+7dabb74d 修复：切换到新会话后，底部状态栏的上下文统计没有处理
+49196ffd 会话支持平铺模式显示
+2ab6d6ff Release version 0.1.0
+16a3267e 切换会话时，会话输入框自动获得焦点
+5960cceb 优化新会话页面显示布局
+380f430d 重构部分会话消息处理逻辑，优化会话消息渲染
+a048a4ca 继续优化重构后的逻辑
+516aebd7 用户消息处理优化
+11a5484b 修复Agent消息在响应结束后显示两条
+91636ada 重构会话消息处理和显示逻辑
+aa1ff9a6 修复会话实时状态显示
+13667729 支持在会话消息中打开里面的链接和本地文件
+5564fdd3 优化会话加载逻辑
+51310da5 修复会话结束后，最后一个思考可能还会显示思考中
+67025e21 Release version 0.0.19
+bdce2427 修复windows下kill_tree包特性处理
+8ea878db Release version 0.0.18
+f24081bc 修复github工作流
+950040ac 优化系统版本升级操作流程
+78b5a4d6 修复导入本地会话时记录的修改时间不正确
+6d865649 优化agent执行命令时tool call的标题显示
+33a8d719 修复windows下有时无法取消对话的情况
+160326b7 优化消息实时响应结束后的处理逻辑，不再立即重新加载本地数据
+b2f017d6 消除导入未使用的lint警告
+084fe8e5 去掉folder窗口底部状态栏里关于会话消息数量的统计
+08b33b57 扩充多语言范围，新增7种多语言
+32fbafa1 更新README文件
+2c350866 Release version 0.0.17
+34819f42 升级OpenCode到最新版本
+46b27644 代码警告消除和优化
+2b4f0048 支持部分agent实时更新上下文用量信息
+53186c4a 会话长消息时虚拟渲染
+5b416bd3 修复folder窗口的大小状态未保持上次的位置和状态
+9b9307f2 Release versioin 0.0.16
+a3523b12 升级OpenCode SDK版本
+baa97ed5 优化消息输入框附加图片时的样式
+c7f21906 优化用户消息的图片展示
+593e03e2 支持opencode 的 Agent 解析用户消息里的图片
+c5537f63 支持gemini cli 的 Agent 解析用户消息里的图片
+53306482 支持claude code 的 Agent 解析用户消息里的图片
+51876db1 代码优化
+c1220e1a 优化事件处理
+7a4cbcb7 支持在会话输入框直接进行文件/图片的拖拽和粘贴
+68e2c7f9 修复commits区域展开后，里面的提交消息显示不完整
+7b65fe8d 右侧边栏支持快捷操作“提交代码”
+ab31d306 优化更新失败时的提示语 修复检查更新按钮点击后有重影
+a16a230c Release version 0.0.15
+b7058a2b welcome agent 处理优化
+62d8e1a0 设置页面修改语言和Agent，其它页面实时更新状态
+8f265f8c 优化多语言处理
+3cc28167 更新Agent SDK注册表
+f3986e7e 修复和优化agent sdk预检和安装
+dacec694 处理#[allow(dead_code)]代码
+b1ea16fa 移除Unknown错误码
+dbcac807 统一错误处理
+100ce01f 后端多语言通用错误信息封装处理
+2b68d77a folders后端多语言处理
+349845c1 folders.rs多语言处理
+6e5219cc 继续多语言处理
+931f69c4 继续会话去多语言处理
+17a03ef9 继续处理会话区多语言
+89c91ac1 继续多语言补充
+47189318 继续填充多语言处理
+a356b813 folder页面全量多语言处理
+3ddc8f16 支持folder主界面多语言
+07963e97 后端通用错误处理
+6c48be02 欢迎页面支持多语言
+aeecc476 优化设置页面代码
+5ca9fd0b 设置窗口多语言处理
+28babff5 多语言优化
+934f689b 初步集成next-intl支持多语言
+efd87dbd 更新项目主图
+dce5da62 第一个版本发布
+54d1097b Initial commit

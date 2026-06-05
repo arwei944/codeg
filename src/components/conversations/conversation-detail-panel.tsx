@@ -295,10 +295,15 @@ const ConversationTabView = memo(function ConversationTabView({
   // session's external_id has been resolved before auto-connecting.
   // Otherwise the auto-connect effect fires with sessionId=undefined and
   // the backend falls back to session/new, orphaning the historical
-  // context. cline doesn't support session resume, so it connects
-  // immediately regardless.
+  // context. cline, hermes, grok, and custom don't support session resume,
+  // so they connect immediately regardless.
   const awaitingHistoricalSessionId =
-    hasPersistedConversation && selectedAgent !== "cline" && detailLoading
+    hasPersistedConversation &&
+    selectedAgent !== "cline" &&
+    selectedAgent !== "hermes" &&
+    selectedAgent !== "grok" &&
+    selectedAgent !== "custom" &&
+    detailLoading
   const canAutoConnect =
     (hasPersistedConversation || (agentsLoaded && usableAgentCount > 0)) &&
     !awaitingHistoricalSessionId &&
@@ -333,7 +338,11 @@ const ConversationTabView = memo(function ConversationTabView({
     isActive: isActive && canAutoConnect,
     workingDir: workingDirForConnection,
     sessionId:
-      dbConversationId != null && selectedAgent !== "cline"
+      dbConversationId != null &&
+      selectedAgent !== "cline" &&
+      selectedAgent !== "hermes" &&
+      selectedAgent !== "grok" &&
+      selectedAgent !== "custom"
         ? externalId
         : undefined,
   })
@@ -1039,11 +1048,13 @@ export function ConversationDetailPanel() {
     removeConversation: runtimeRemoveConversation,
   } = useConversationRuntime()
   const { activeFolder: folder } = useActiveFolder()
-  const { conversations, getFolder } = useAppWorkspace()
+  const { conversations, getFolder, allFolders, foldersHydrated } =
+    useAppWorkspace()
   const {
     tabs,
     activeTabId,
     isTileMode,
+    tabsHydrated,
     openNewConversationTab,
     closeTab,
     switchTab,
@@ -1059,6 +1070,27 @@ export function ConversationDetailPanel() {
   const { disconnect: disconnectByKey } = useAcpActions()
   const { addTask, updateTask } = useTaskContext()
   const [reloadByTabId, setReloadByTabId] = useState<Record<string, number>>({})
+
+  // Auto-create a draft tab when hydration completes with no tabs
+  // but at least one folder exists. This mirrors the guard in
+  // ConversationTabView, which never mounts when hasNoTabs is true.
+  useEffect(() => {
+    if (!tabsHydrated) return
+    if (!foldersHydrated) return
+    const hasNoTabs = tabs.length === 0 && !activeTabId
+    if (!hasNoTabs) return
+    const targetFolder = folder ?? allFolders[0]
+    if (!targetFolder) return
+    openNewConversationTab(targetFolder.id, targetFolder.path)
+  }, [
+    tabs,
+    activeTabId,
+    tabsHydrated,
+    foldersHydrated,
+    folder,
+    allFolders,
+    openNewConversationTab,
+  ])
 
   const exportLabels = useMemo<ExportLabels>(
     () => ({
