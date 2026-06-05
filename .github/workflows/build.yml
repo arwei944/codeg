@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-desktop:
+  build:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,11 +30,11 @@ jobs:
         with:
           target: x86_64-pc-windows-msvc
 
-      - name: Build codeg-server (web mode)
+      - name: Build codeg-server
         run: cargo build --release --no-default-features --bin codeg-server
         working-directory: src-tauri
 
-      - name: Build desktop app
+      - name: Build codeg (Tauri desktop)
         run: cargo build --release --bin codeg
         working-directory: src-tauri
 
@@ -50,34 +50,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: codeg-win64
+          name: codeg-v0.15.0-win64
           path: codeg-v0.15.0-win64.zip
-
-      - name: Create & Upload Release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        shell: pwsh
-        run: |
-          $tag = "${{ github.ref_name }}"
-          $zipPath = "codeg-v0.15.0-win64.zip"
-          
-          # Create release via API
-          $body = @{
-            tag_name = $tag
-            name = $tag
-            body = "codeg Desktop + Server`n`n- codeg.exe (Tauri desktop app)`n- codeg-server.exe (web server)`n- out/ (frontend files)"
-          } | ConvertTo-Json -Compress
-          
-          $release = curl.exe -s -X POST "https://api.github.com/repos/${{ github.repository }}/releases" `
-            -H "Authorization: token $env:GH_TOKEN" `
-            -H "Content-Type: application/json" `
-            -d $body | ConvertFrom-Json
-          
-          $releaseId = $release.id
-          Write-Host "Release ID: $releaseId"
-          
-          # Upload asset
-          curl.exe -s -X POST "https://uploads.github.com/repos/${{ github.repository }}/releases/$releaseId/assets?name=$(Split-Path $zipPath -Leaf)" `
-            -H "Authorization: token $env:GH_TOKEN" `
-            -H "Content-Type: application/zip" `
-            --data-binary "@$zipPath" | ConvertFrom-Json | Select-Object name, state, size
