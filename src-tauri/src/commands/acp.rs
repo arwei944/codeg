@@ -849,6 +849,14 @@ fn resolve_opencode_config_path() -> PathBuf {
         return primary;
     }
 
+    let jsonc = home_dir_or_default()
+        .join(".config")
+        .join("opencode")
+        .join("opencode.jsonc");
+    if jsonc.exists() {
+        return jsonc;
+    }
+
     let legacy = opencode_legacy_config_path();
     if legacy.exists() {
         return legacy;

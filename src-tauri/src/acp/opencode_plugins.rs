@@ -56,7 +56,9 @@ pub struct PluginInstallEvent {
 /// macOS those return ~/Library/Application Support and ~/Library/Caches,
 /// while opencode always uses the XDG paths.
 fn opencode_config_path() -> Option<PathBuf> {
-    xdg_config_home().map(|d| d.join("opencode").join("opencode.json"))
+    let base = xdg_config_home().map(|d| d.join("opencode"))?;
+    let candidates = [base.join("opencode.json"), base.join("opencode.jsonc")];
+    candidates.into_iter().find(|p| p.exists()).or(Some(base.join("opencode.json")))
 }
 
 fn opencode_cache_dir() -> Option<PathBuf> {

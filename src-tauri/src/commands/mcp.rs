@@ -613,10 +613,17 @@ fn codex_config_toml_path() -> PathBuf {
 }
 
 fn opencode_config_path() -> PathBuf {
+    let primary = home_dir_or_default()
+        .join(".config")
+        .join("opencode")
+        .join("opencode.json");
+    if primary.exists() {
+        return primary;
+    }
     home_dir_or_default()
         .join(".config")
         .join("opencode")
-        .join("opencode.json")
+        .join("opencode.jsonc")
 }
 
 fn gemini_config_path() -> PathBuf {

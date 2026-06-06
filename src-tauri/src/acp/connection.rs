@@ -717,6 +717,8 @@ async fn emit_session_config_options_values(
     let mut mapped = map_session_config_options(&config_options);
     if agent_type == AgentType::Codex {
         ensure_codex_mode_option(&mut mapped);
+    } else if agent_type == AgentType::Hermes {
+        ensure_hermes_config_options(&mut mapped);
     }
     emit_with_state(
         state,
@@ -726,6 +728,74 @@ async fn emit_session_config_options_values(
         },
     )
     .await;
+}
+
+/// Hermes ACP adapter sends model info in the `models` field of
+/// `NewSessionResponse` (via `SessionModelState`) rather than in
+/// `config_options`. The Rust `sacp` crate v11 does not deserialize the
+/// `models` field, so codeg never sees the model dropdown / thought-level
+/// options Hermes advertises. We synthesize them here so the chat UI
+/// displays a model selector and reasoning intensity control.
+///
+/// The current model value is read from the `ANTHROPIC_MODEL` env var
+/// (inherited from `~/.claude/settings.json`) since the Hermes ACP process
+/// receives it as `HERMES_MODEL` via `try_fill_missing_creds`.
+fn ensure_hermes_config_options(options: &mut Vec<SessionConfigOptionInfo>) {
+    if options.iter().any(|o| o.id == "model") {
+        return;
+    }
+
+    let current_model = std::env::var("ANTHROPIC_MODEL")
+        .ok()
+        .filter(|s| !s.trim().is_empty())
+        .unwrap_or_else(|| "deepseek-v4-pro".to_string());
+
+    let model_option = SessionConfigOptionInfo {
+        id: "model".to_string(),
+        name: "Model".to_string(),
+        description: Some("Select the model for this session".to_string()),
+        category: Some("model".to_string()),
+        kind: SessionConfigKindInfo::Select(SessionConfigSelectInfo {
+            current_value: current_model.clone(),
+            options: vec![SessionConfigSelectOptionInfo {
+                value: current_model.clone(),
+                name: current_model,
+                description: Some("Current model (change via env settings)".to_string()),
+            }],
+            groups: vec![],
+        }),
+    };
+
+    let thought_level_option = SessionConfigOptionInfo {
+        id: "thought_level".to_string(),
+        name: "Thought Level".to_string(),
+        description: Some("Controls reasoning depth".to_string()),
+        category: Some("thought_level".to_string()),
+        kind: SessionConfigKindInfo::Select(SessionConfigSelectInfo {
+            current_value: "medium".to_string(),
+            options: vec![
+                SessionConfigSelectOptionInfo {
+                    value: "low".to_string(),
+                    name: "Low".to_string(),
+                    description: Some("Minimal reasoning overhead, faster responses".to_string()),
+                },
+                SessionConfigSelectOptionInfo {
+                    value: "medium".to_string(),
+                    name: "Medium".to_string(),
+                    description: Some("Balanced reasoning depth".to_string()),
+                },
+                SessionConfigSelectOptionInfo {
+                    value: "high".to_string(),
+                    name: "High".to_string(),
+                    description: Some("Deep reasoning for complex tasks".to_string()),
+                },
+            ],
+            groups: vec![],
+        }),
+    };
+
+    options.push(model_option);
+    options.push(thought_level_option);
 }
 
 async fn emit_selectors_ready(state: &Arc<RwLock<SessionState>>, emitter: &EventEmitter) {
@@ -1454,6 +1524,7 @@ async fn run_connection(
                             &mut session,
                             &state,
                             &emitter_clone,
+                            agent_type,
                             preferred_mode_id.as_deref(),
                             &preferred_config_values,
                             initial_config_options.unwrap_or_default(),
@@ -1596,6 +1667,7 @@ async fn run_connection(
                             &mut session,
                             &state,
                             &emitter_clone,
+                            agent_type,
                             preferred_mode_id.as_deref(),
                             &preferred_config_values,
                             initial_config_options.unwrap_or_default(),
@@ -1670,6 +1742,7 @@ async fn run_connection(
                     &mut session,
                     &state,
                     &emitter_clone,
+                    agent_type,
                     preferred_mode_id.as_deref(),
                     &preferred_config_values,
                     initial_config_options.unwrap_or_default(),
@@ -1848,6 +1921,16 @@ async fn set_session_config_option(
     config_id: String,
     value_id: String,
 ) -> Result<(), sacp::Error> {
+    // Hermes uses a separate `session/set_session_model` ACP method for
+    // model switching. When a Hermes user picks a model from the dropdown,
+    // call the real model endpoint FIRST, then fall through to the standard
+    // config-option store so the value is persisted.
+    if agent_type == AgentType::Hermes && config_id == "model" {
+        if let Err(e) = set_session_model_inner(cx, session_id, &value_id).await {
+            eprintln!("[ACP] Hermes model switch failed: {e}");
+            // Non-fatal: still store the config_option so the UI is consistent.
+        }
+    }
     let updated = set_session_config_option_inner(cx, session_id, config_id, value_id).await?;
     emit_session_config_options_values(state, emitter, agent_type, updated).await;
     Ok(())
@@ -1878,6 +1961,28 @@ async fn set_session_config_option_inner(
     Ok(response.config_options)
 }
 
+/// Send `session/set_session_model` to the Hermes ACP agent to switch the
+/// active model for this session. Hermes uses a dedicated ACP method rather
+/// than a config_option for model switching, so we need this separate call.
+///
+/// The request is sent as a raw UntypedMessage because the `sacp` crate v11
+/// does not define a typed `SetSessionModelRequest`.
+async fn set_session_model_inner(
+    cx: &ConnectionTo<Agent>,
+    session_id: &SessionId,
+    model_id: &str,
+) -> Result<(), sacp::Error> {
+    let params = serde_json::json!({
+        "session_id": session_id.0.to_string(),
+        "model_id": model_id,
+    });
+    let untyped_req = UntypedMessage::new("session/set_session_model", params).map_err(|e| {
+        sacp::util::internal_error(format!("Failed to build set_session_model request: {e}"))
+    })?;
+    let _raw_response = cx.send_request_to(Agent, untyped_req).block_task().await?;
+    Ok(())
+}
+
 /// Apply user-saved mode and config-option preferences to a freshly-attached
 /// session BEFORE the initial `session_modes` / `session_config_options`
 /// events are emitted to the frontend.
@@ -1903,6 +2008,7 @@ async fn apply_preferred_session_options(
     session: &mut sacp::ActiveSession<'_, Agent>,
     state: &Arc<RwLock<SessionState>>,
     emitter: &EventEmitter,
+    agent_type: AgentType,
     preferred_mode_id: Option<&str>,
     preferred_config_values: &BTreeMap<String, String>,
     initial_config_options: Vec<SessionConfigOption>,
@@ -1927,6 +2033,14 @@ async fn apply_preferred_session_options(
     let session_id = session.session_id().clone();
     let mut options = initial_config_options;
     for (config_id, value_id) in preferred_config_values {
+        // Hermes: model changes need `session/set_session_model` in addition
+        // to `session/set_config_option`. Call the model endpoint first.
+        if agent_type == AgentType::Hermes && config_id == "model" {
+            if let Err(e) = set_session_model_inner(cx, &session_id, value_id).await {
+                eprintln!("[ACP] failed to apply preferred model '{value_id}' \
+                           on connect via set_session_model: {e}");
+            }
+        }
         // Skip the round-trip when the agent's current value already matches.
         // Note: Codex omits "mode" from its advertised options but accepts
         // `set_config_option` for it (see `ensure_codex_mode_option`), so we
