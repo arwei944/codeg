@@ -952,10 +952,7 @@ export interface SystemProxySettings {
   proxy_url: string | null
 }
 
-export type AppLocale =
-  | "en"
-  | "zh_cn"
-  | "zh_tw"
+export type AppLocale = "en" | "zh_cn" | "zh_tw"
 export type LanguageMode = "system" | "manual"
 
 export interface SystemLanguageSettings {

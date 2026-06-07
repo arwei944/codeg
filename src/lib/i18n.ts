@@ -1,18 +1,11 @@
 import type { AppLocale, SystemLanguageSettings } from "@/lib/types"
 
-export const APP_LOCALES: readonly AppLocale[] = [
-  "en",
-  "zh_cn",
-  "zh_tw",
-]
+export const APP_LOCALES: readonly AppLocale[] = ["en", "zh_cn", "zh_tw"]
 const FALLBACK_APP_LOCALE: AppLocale = "en"
 export const LANGUAGE_SETTINGS_STORAGE_KEY = "codeg.system_language_settings"
 export const LANGUAGE_MODE_COOKIE_KEY = "codeg.language_mode"
 export const LANGUAGE_COOKIE_KEY = "codeg.locale"
-export type IntlLocale =
-  | "en"
-  | "zh-CN"
-  | "zh-TW"
+export type IntlLocale = "en" | "zh-CN" | "zh-TW"
 
 export const DEFAULT_LANGUAGE_SETTINGS: SystemLanguageSettings = {
   mode: "system",
@@ -36,11 +29,7 @@ export function isAppLocale(value: unknown): value is AppLocale {
 }
 
 export function isIntlLocale(value: unknown): value is IntlLocale {
-  return (
-    value === "en" ||
-    value === "zh-CN" ||
-    value === "zh-TW"
-  )
+  return value === "en" || value === "zh-CN" || value === "zh-TW"
 }
 
 export function toIntlLocale(locale: AppLocale): IntlLocale {
