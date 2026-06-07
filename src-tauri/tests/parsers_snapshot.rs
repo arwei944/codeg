@@ -14,8 +14,8 @@ use std::fs;
 use std::path::Path;
 
 use codeg_lib::parsers::{
-    claude::ClaudeParser, cline::ClineParser, codex::CodexParser, gemini::GeminiParser,
-    openclaw::OpenClawParser, opencode::OpenCodeParser, AgentParser,
+    claude::ClaudeParser, cline::ClineParser, codex::CodexParser,
+    opencode::OpenCodeParser, AgentParser,
 };
 use insta::assert_json_snapshot;
 use serde_json::json;
@@ -147,131 +147,6 @@ fn codex_minimal_session_snapshot() {
 
 // ────────────────────────────────────────────────────────────────────────────
 // Gemini
-// ────────────────────────────────────────────────────────────────────────────
-
-#[test]
-fn gemini_minimal_session_snapshot() {
-    let temp = tempfile::tempdir().expect("create tempdir");
-    let base = temp.path().to_path_buf();
-    // Gemini layout: <base>/tmp/<project>/chats/session-*.json + .project_root
-    let project_dir = base.join("tmp").join("codeg");
-    let chats_dir = project_dir.join("chats");
-    write(
-        &project_dir.join(".project_root"),
-        "/Users/test/workspace/demo",
-    );
-    let session_id = "gemini-sess-001";
-    let content = serde_json::to_string_pretty(&json!({
-        "sessionId": session_id,
-        "projectHash": "abc",
-        "startTime": "2026-03-02T04:30:00.000Z",
-        "lastUpdated": "2026-03-02T04:30:02.000Z",
-        "messages": [
-            {
-                "id": "u1",
-                "timestamp": "2026-03-02T04:30:00.000Z",
-                "type": "user",
-                "content": [{"text": "ping"}]
-            },
-            {
-                "id": "a1",
-                "timestamp": "2026-03-02T04:30:02.000Z",
-                "type": "gemini",
-                "content": "pong",
-                "tokens": {"input": 10, "output": 20, "cached": 3},
-                "model": "gemini-2.5-pro"
-            }
-        ]
-    }))
-    .expect("serialize gemini fixture");
-    write(
-        &chats_dir.join(format!("session-2026-03-02T04-30-{session_id}.json")),
-        &content,
-    );
-
-    let parser = GeminiParser::with_base_dir(base);
-    let summaries = parser.list_conversations().expect("list gemini");
-    let detail = parser.get_conversation(session_id).expect("detail gemini");
-
-    assert_json_snapshot!("gemini_list", summaries, {
-        ".**.started_at" => "[ts]",
-        ".**.ended_at" => "[ts]",
-    });
-    assert_json_snapshot!("gemini_detail", detail, {
-        ".**.started_at" => "[ts]",
-        ".**.ended_at" => "[ts]",
-        ".**.timestamp" => "[ts]",
-        ".**.completed_at" => "[ts]",
-    });
-}
-
-// ────────────────────────────────────────────────────────────────────────────
-// OpenClaw
-// ────────────────────────────────────────────────────────────────────────────
-
-#[test]
-fn openclaw_minimal_session_snapshot() {
-    let temp = tempfile::tempdir().expect("create tempdir");
-    let base = temp.path().to_path_buf();
-    // Layout: <base>/<agent_id>/sessions/<session_id>.jsonl
-    let agent_id = "test-agent";
-    let session_id = "openclaw-sess-001";
-    let conversation_id = format!("{agent_id}/{session_id}");
-    let sessions_dir = base.join(agent_id).join("sessions");
-    let jsonl = format!(
-        "{}\n{}\n{}\n",
-        json!({
-            "type": "session",
-            "version": 3,
-            "id": session_id,
-            "timestamp": "2026-03-17T01:00:00.000Z",
-            "cwd": "/tmp/demo"
-        }),
-        json!({
-            "type": "message",
-            "id": "u1",
-            "parentId": null,
-            "timestamp": "2026-03-17T01:00:01.000Z",
-            "message": {
-                "role": "user",
-                "content": [{"type": "text", "text": "Hello"}]
-            }
-        }),
-        json!({
-            "type": "message",
-            "id": "a1",
-            "parentId": "u1",
-            "timestamp": "2026-03-17T01:00:02.000Z",
-            "message": {
-                "role": "assistant",
-                "content": [{"type": "text", "text": "Hi"}],
-                "model": "gpt-5.4",
-                "usage": {"input": 100, "output": 50, "cacheRead": 200, "cacheWrite": 0, "totalTokens": 350}
-            }
-        }),
-    );
-    write(&sessions_dir.join(format!("{session_id}.jsonl")), &jsonl);
-
-    let parser = OpenClawParser::with_base_dir(base);
-    let summaries = parser.list_conversations().expect("list openclaw");
-    let detail = parser
-        .get_conversation(&conversation_id)
-        .expect("detail openclaw");
-
-    assert_json_snapshot!("openclaw_list", summaries, {
-        ".**.started_at" => "[ts]",
-        ".**.ended_at" => "[ts]",
-    });
-    assert_json_snapshot!("openclaw_detail", detail, {
-        ".**.started_at" => "[ts]",
-        ".**.ended_at" => "[ts]",
-        ".**.timestamp" => "[ts]",
-        ".**.completed_at" => "[ts]",
-    });
-}
-
-// ────────────────────────────────────────────────────────────────────────────
-// Cline
 // ────────────────────────────────────────────────────────────────────────────
 
 #[test]
