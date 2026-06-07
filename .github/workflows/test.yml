@@ -76,7 +76,7 @@ jobs:
       - name: Install Linux desktop dependencies
         # Only the Linux desktop build needs webkit/appindicator. Windows
         # ships WebView2 with the OS; macOS uses WKWebView from the SDK.
-        if: matrix.os == 'ubuntu-22.04' && matrix.mode == 'desktop'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -88,7 +88,6 @@ jobs:
         # Tauri's build script validates `frontendDist` and bundled resource
         # paths during Rust compilation. The frontend job owns the real static
         # export; Rust desktop cells only need the path to exist for tests.
-        if: matrix.os == 'ubuntu-22.04'
         shell: bash
         run: |
           mkdir -p out
