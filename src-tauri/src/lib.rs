@@ -15,8 +15,6 @@ pub mod models;
 mod network;
 pub mod parsers;
 pub mod paths;
-pub mod pet_state_mapper;
-pub mod pets;
 #[cfg(feature = "tauri-runtime")]
 pub mod preferences;
 pub mod process;
@@ -45,7 +43,7 @@ mod tauri_app {
         acp as acp_commands, chat_channel as chat_channel_commands, conversations,
         delegation as delegation_commands, experts as experts_commands, file_io, folder_commands,
         folders, mcp as mcp_commands, model_provider as model_provider_commands, notification,
-        pet as pet_commands, project_boot, quick_messages as quick_messages_commands,
+        quick_messages as quick_messages_commands,
         remote_proxy as remote_proxy_commands, remote_workspace as remote_workspace_commands,
         system_settings, terminal as terminal_commands, version_control, windows,
         workspace_state as workspace_state_commands,
@@ -187,7 +185,6 @@ mod tauri_app {
                     std::sync::Arc::new(crate::acp::EventBusMetrics::default());
                 std::sync::Arc::new(crate::acp::InternalEventBus::new(metrics))
             })
-            .manage(crate::pet_state_mapper::new_pet_state_handle())
             .setup(|app| {
                 let app_data_dir = app.path().app_data_dir()?;
 
@@ -335,36 +332,6 @@ mod tauri_app {
                     });
                 }
 
-                // Spawn the desktop pet state mapper: subscribes to ACP events
-                // (typed envelopes via the in-process bus) AND folder/app
-                // side-channel notifications (JSON via the broadcaster), and
-                // emits `pet://state` whenever the aggregated pet state
-                // changes. The renderer in the floating pet window listens
-                // for these events to drive its sprite animation row.
-                {
-                    let bus = app
-                        .state::<std::sync::Arc<crate::acp::InternalEventBus>>()
-                        .inner()
-                        .clone();
-                    let broadcaster = app
-                        .state::<std::sync::Arc<web::event_bridge::WebEventBroadcaster>>()
-                        .inner()
-                        .clone();
-                    let emitter = web::event_bridge::EventEmitter::Tauri(app.handle().clone());
-                    let pet_state_handle = app
-                        .state::<crate::pet_state_mapper::PetStateHandle>()
-                        .inner()
-                        .clone();
-                    tauri::async_runtime::spawn(
-                        crate::pet_state_mapper::pet_state_subscriber_task(
-                            bus,
-                            broadcaster,
-                            emitter,
-                            pet_state_handle,
-                        ),
-                    );
-                }
-
                 // Delegation broker + UDS listener. Built from the managed
                 // ConnectionManager + DB so spawn / depth-lookup work against
                 // live state. Managed alongside the existing per-resource
@@ -502,29 +469,6 @@ mod tauri_app {
                     return;
                 }
 
-                // Dispatch native pet context-menu actions. Items live under
-                // the `pet:` id namespace; everything else (future app
-                // menus) flows past untouched. We re-emit a webview event
-                // rather than acting in Rust so the existing frontend
-                // commands (pet_save_window_state, open_settings_window,
-                // close_pet_window) stay the single source of truth — the
-                // native menu is just a different *trigger*.
-                if !id.starts_with(windows::PET_MENU_ID_PREFIX) {
-                    return;
-                }
-                let payload: serde_json::Value =
-                    if let Some(scale) = windows::pet_menu_scale_from_id(&id) {
-                        serde_json::json!({ "type": "scale", "value": scale })
-                    } else if id == windows::PET_MENU_ID_OPEN_MANAGER {
-                        serde_json::json!({ "type": "open_manager" })
-                    } else if id == windows::PET_MENU_ID_CLOSE {
-                        serde_json::json!({ "type": "close" })
-                    } else {
-                        // Header / unknown — nothing to do.
-                        return;
-                    };
-                use tauri::Emitter;
-                let _ = app.emit_to("pet", "pet://menu-action", payload);
             })
             .on_window_event(|window, event| {
                 let label = window.label().to_string();
@@ -572,44 +516,6 @@ mod tauri_app {
                     }
                 }
 
-                if label == "pet"
-                    && matches!(
-                        event,
-                        tauri::WindowEvent::CloseRequested { .. } | tauri::WindowEvent::Destroyed
-                    )
-                {
-                    // Persist `enabled = false` so the next launch doesn't
-                    // race-open the pet before the user asks for it. We
-                    // intentionally do NOT clear `active_pet_id` — the user
-                    // chose that pet, they want it back next time they open
-                    // the window.
-                    if let Some(db) = window.app_handle().try_state::<db::AppDatabase>() {
-                        let conn = db.conn.clone();
-                        let save = async move {
-                            let _ = crate::commands::pet::pet_save_window_state_core(
-                                &conn,
-                                crate::models::pet::PetWindowStatePatch {
-                                    x: None,
-                                    y: None,
-                                    scale: None,
-                                    always_on_top: None,
-                                    enabled: Some(false),
-                                },
-                            )
-                            .await;
-                        };
-                        // During app shutdown the runtime is about to be torn
-                        // down — a fire-and-forget spawn would lose the save
-                        // and `enabled = true` would survive into the next
-                        // launch. Block here so the write lands before
-                        // ExitRequested returns.
-                        if APP_QUITTING.load(Ordering::Relaxed) {
-                            tauri::async_runtime::block_on(save);
-                        } else {
-                            tauri::async_runtime::spawn(save);
-                        }
-                    }
-                }
 
                 if label == "main" {
                     if let tauri::WindowEvent::CloseRequested { api, .. } = event {
@@ -755,7 +661,6 @@ mod tauri_app {
                 windows::open_merge_window,
                 windows::open_stash_window,
                 windows::open_push_window,
-                windows::open_project_boot_window,
                 remote_workspace_commands::list_remote_workspace_connections,
                 remote_workspace_commands::create_remote_workspace_connection,
                 remote_workspace_commands::update_remote_workspace_connection,
@@ -774,35 +679,9 @@ mod tauri_app {
                 remote_proxy_commands::remote_ws_subscribe,
                 remote_proxy_commands::remote_ws_unsubscribe,
                 remote_proxy_commands::remote_ws_send_text,
-                windows::open_pet_window,
-                windows::close_pet_window,
-                windows::pet_window_record_position,
-                windows::pet_show_context_menu,
                 windows::update_traffic_light_position,
                 windows::update_appearance_mode,
                 windows::set_tray_locale,
-                pet_commands::pet_list,
-                pet_commands::pet_get,
-                pet_commands::pet_read_spritesheet,
-                pet_commands::pet_add,
-                pet_commands::pet_update_meta,
-                pet_commands::pet_replace_sprite,
-                pet_commands::pet_delete,
-                pet_commands::pet_list_importable_codex,
-                pet_commands::pet_import_codex,
-                pet_commands::pet_codex_import_available,
-                pet_commands::pet_get_settings,
-                pet_commands::pet_set_active,
-                pet_commands::pet_save_window_state,
-                pet_commands::pet_marketplace_list,
-                pet_commands::pet_marketplace_install,
-                pet_commands::pet_celebrate,
-                pet_commands::pet_get_current_state,
-                project_boot::detect_package_manager,
-                project_boot::create_shadcn_project,
-                project_boot::detect_hyperframes_skills,
-                project_boot::install_hyperframes_skills,
-                project_boot::create_hyperframes_project,
                 system_settings::get_system_proxy_settings,
                 system_settings::update_system_proxy_settings,
                 system_settings::get_system_language_settings,
@@ -932,14 +811,6 @@ mod tauri_app {
             .run(|app, event| match event {
                 tauri::RunEvent::ExitRequested { .. } => {
                     APP_QUITTING.store(true, Ordering::Relaxed);
-                    // Drop the desktop pet alongside the workspace so it
-                    // never outlives a real quit. Tauri also tears down all
-                    // windows on shutdown, but doing it explicitly here lets
-                    // the pet's CloseRequested handler persist `enabled = false`
-                    // before the runtime races to exit.
-                    if let Some(pet) = app.get_webview_window("pet") {
-                        let _ = pet.close();
-                    }
                     if let Some(ws) = app.try_state::<web::WebServerState>() {
                         tauri::async_runtime::block_on(web::do_stop_web_server(&ws));
                     }

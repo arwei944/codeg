@@ -42,11 +42,6 @@ path = "src/main.rs"
 required-features = ["tauri-runtime"]
 
 [[bin]]
-name = "codeg-server"
-path = "src/bin/codeg_server.rs"
-required-features = []
-
-[[bin]]
 name = "codeg-mcp"
 path = "src/bin/codeg_mcp.rs"
 required-features = []

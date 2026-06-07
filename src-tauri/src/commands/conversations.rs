@@ -9,8 +9,6 @@ use crate::models::*;
 use crate::parsers::claude::ClaudeParser;
 use crate::parsers::cline::ClineParser;
 use crate::parsers::codex::CodexParser;
-use crate::parsers::gemini::GeminiParser;
-use crate::parsers::openclaw::OpenClawParser;
 use crate::parsers::opencode::OpenCodeParser;
 use crate::parsers::{path_eq_for_matching, AgentParser, ParseError};
 use crate::web::event_bridge::{
@@ -128,8 +126,6 @@ fn list_conversations_sync(
         (AgentType::ClaudeCode, Box::new(ClaudeParser::new())),
         (AgentType::Codex, Box::new(CodexParser::new())),
         (AgentType::OpenCode, Box::new(OpenCodeParser::new())),
-        (AgentType::Gemini, Box::new(GeminiParser::new())),
-        (AgentType::OpenClaw, Box::new(OpenClawParser::new())),
         (AgentType::Cline, Box::new(ClineParser::new())),
     ];
 
@@ -231,10 +227,9 @@ pub async fn get_conversation(
             AgentType::ClaudeCode => Box::new(ClaudeParser::new()),
             AgentType::Codex => Box::new(CodexParser::new()),
             AgentType::OpenCode => Box::new(OpenCodeParser::new()),
-            AgentType::Gemini => Box::new(GeminiParser::new()),
-            AgentType::OpenClaw => Box::new(OpenClawParser::new()),
             AgentType::Cline => Box::new(ClineParser::new()),
-            AgentType::Hermes | AgentType::Grok | AgentType::Custom => {
+            AgentType::Gemini | AgentType::OpenClaw | AgentType::Hermes
+            | AgentType::Grok | AgentType::Custom => {
                 return Err(AppCommandError::not_found("No legacy parser for this agent type"))
             }
         };
@@ -454,10 +449,9 @@ pub async fn get_folder_conversation_core(
                 AgentType::ClaudeCode => Box::new(ClaudeParser::new()),
                 AgentType::Codex => Box::new(CodexParser::new()),
                 AgentType::OpenCode => Box::new(OpenCodeParser::new()),
-                AgentType::Gemini => Box::new(GeminiParser::new()),
-                AgentType::OpenClaw => Box::new(OpenClawParser::new()),
                 AgentType::Cline => Box::new(ClineParser::new()),
-                AgentType::Hermes | AgentType::Grok | AgentType::Custom => {
+                AgentType::Gemini | AgentType::OpenClaw | AgentType::Hermes
+                | AgentType::Grok | AgentType::Custom => {
                     return Ok((vec![], None, None))
                 }
             };

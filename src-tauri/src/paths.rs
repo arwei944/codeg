@@ -112,5 +112,5 @@ pub fn resolve_effective_data_dir(tauri_fallback: &Path) -> PathBuf {
 
 // Path resolution depends on global env vars (`CODEG_HOME`, `CODEG_DATA_DIR`),
 // so unit tests would need cross-test serialization to avoid races. The
-// behaviour is covered end-to-end by `pets::*` tests which set `CODEG_HOME`
+// behaviour is covered end-to-end by `` tests which set `CODEG_HOME`
 // inside a serialized test mutex; we deliberately don't duplicate that here.

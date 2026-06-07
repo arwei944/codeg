@@ -1,13 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import ar from "./messages/ar.json"
-import de from "./messages/de.json"
 import en from "./messages/en.json"
-import es from "./messages/es.json"
-import fr from "./messages/fr.json"
-import ja from "./messages/ja.json"
-import ko from "./messages/ko.json"
-import pt from "./messages/pt.json"
 import zhCN from "./messages/zh-CN.json"
 import zhTW from "./messages/zh-TW.json"
 
@@ -31,13 +24,6 @@ const reference = new Set(collectKeys(en as MessageNode))
 // the test with the exact dotted path, making translation gaps grep-able.
 describe("i18n locale key parity vs en.json", () => {
   it.each([
-    ["ar", ar],
-    ["de", de],
-    ["es", es],
-    ["fr", fr],
-    ["ja", ja],
-    ["ko", ko],
-    ["pt", pt],
     ["zh-CN", zhCN],
     ["zh-TW", zhTW],
   ] as const)("%s has the same key set as en", (_locale, messages) => {

@@ -614,27 +614,6 @@ pub fn build_router(
             "/experts_open_central_dir",
             post(handlers::experts::experts_open_central_dir),
         )
-        // ─── Project boot ───
-        .route(
-            "/detect_package_manager",
-            post(handlers::project_boot::detect_package_manager),
-        )
-        .route(
-            "/create_shadcn_project",
-            post(handlers::project_boot::create_shadcn_project),
-        )
-        .route(
-            "/detect_hyperframes_skills",
-            post(handlers::project_boot::detect_hyperframes_skills),
-        )
-        .route(
-            "/install_hyperframes_skills",
-            post(handlers::project_boot::install_hyperframes_skills),
-        )
-        .route(
-            "/create_hyperframes_project",
-            post(handlers::project_boot::create_hyperframes_project),
-        )
         // ─── Web Server ───
         .route(
             "/get_web_server_status",
@@ -801,51 +780,6 @@ pub fn build_router(
             "/quick_messages_reorder",
             post(handlers::quick_messages::quick_messages_reorder),
         )
-        // ─── Pet ───
-        .route("/pet_list", post(handlers::pet::pet_list))
-        .route("/pet_get", post(handlers::pet::pet_get))
-        .route(
-            "/pet_read_spritesheet",
-            post(handlers::pet::pet_read_spritesheet),
-        )
-        .route("/pet_add", post(handlers::pet::pet_add))
-        .route("/pet_update_meta", post(handlers::pet::pet_update_meta))
-        .route(
-            "/pet_replace_sprite",
-            post(handlers::pet::pet_replace_sprite),
-        )
-        .route("/pet_delete", post(handlers::pet::pet_delete))
-        .route(
-            "/pet_list_importable_codex",
-            post(handlers::pet::pet_list_importable_codex),
-        )
-        .route("/pet_import_codex", post(handlers::pet::pet_import_codex))
-        .route(
-            "/pet_codex_import_available",
-            post(handlers::pet::pet_codex_import_available),
-        )
-        .route("/pet_get_settings", post(handlers::pet::pet_get_settings))
-        .route("/pet_set_active", post(handlers::pet::pet_set_active))
-        .route(
-            "/pet_save_window_state",
-            post(handlers::pet::pet_save_window_state),
-        )
-        .route(
-            "/pet_marketplace_list",
-            post(handlers::pet::pet_marketplace_list),
-        )
-        .route(
-            "/pet_marketplace_install",
-            post(handlers::pet::pet_marketplace_install),
-        )
-        .route("/pet_celebrate", post(handlers::pet::pet_celebrate))
-        .route(
-            "/pet_get_current_state",
-            post(handlers::pet::pet_get_current_state),
-        )
-        // ─── Terminal ───
-        .route("/terminal_spawn", post(handlers::terminal::terminal_spawn))
-        .route("/terminal_write", post(handlers::terminal::terminal_write))
         .route(
             "/terminal_resize",
             post(handlers::terminal::terminal_resize),

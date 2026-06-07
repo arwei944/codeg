@@ -4,12 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-Codeg（Code Generation）是一个多智能体编码工作台，它将多个智能体（Claude Code、Codex CLI、OpenCode、Gemini CLI、OpenClaw、Cline 等）统一到一个工作区中，支持会话聚合和多智能体协作，支持桌面安装，服务器/Docker 部署。
+Codeg 是一个多智能体编码工作台，它将多个智能体（Claude Code、Codex CLI、OpenCode、Cline、Hermes 等）统一到一个工作区中，支持会话聚合和多智能体协作。
 
 ## 技术栈
 
 - **桌面运行时**: Tauri 2（Rust 后端 + webview 前端）
-- **服务器运行时**: 独立 Rust 二进制（Axum HTTP + WebSocket）
 - **前端**: Next.js 16（静态导出模式）+ React 19 + TypeScript（strict）
 - **样式**: Tailwind CSS v4 + shadcn/ui（radix-maia 风格）
 - **国际化**: next-intl
@@ -36,11 +35,6 @@ cargo check
 cargo test --features test-utils
 cargo clippy --all-targets --features test-utils -- -D warnings
 
-# 服务器模式
-cargo check --no-default-features --bin codeg-server
-cargo test --no-default-features --bin codeg-server --lib
-cargo clippy --no-default-features --bin codeg-server --lib -- -D warnings
-
 # codeg-mcp 协作伴生进程（多智能体委托）
 cargo check --no-default-features --bin codeg-mcp
 cargo clippy --no-default-features --bin codeg-mcp -- -D warnings
@@ -54,16 +48,15 @@ INSTA_UPDATE=auto cargo test --features test-utils     # 自动写新 .snap
 
 ### 双模式运行
 
-项目通过 Cargo feature flags 支持三种二进制：
+项目通过 Cargo feature flags 支持两种二进制：
 
 - **`codeg`**（`tauri-runtime`，默认）：完整桌面应用，包含 Tauri 窗口管理、系统通知、自动更新等
-- **`codeg-server`**（无 feature，`--no-default-features`）：独立服务器模式，仅编译 Axum HTTP API + WebSocket
 - **`codeg-mcp`**（无 feature）：per-launch stdio MCP 伴生进程，被注入到代理 CLI 的 MCP 配置中，向 LLM 暴露**异步**子智能体委托工具。
 
 ### 共享核心
 
-- **`app_state.rs`** — `AppState` 共享状态结构，两种模式通过 `EventEmitter` 枚举区分事件发射方式
-- **`web/event_bridge.rs`** — `EventEmitter::Tauri(AppHandle)` 或 `EventEmitter::WebOnly(Arc<WebEventBroadcaster>)`
+- **`app_state.rs`** — `AppState` 共享状态结构
+- **`web/event_bridge.rs`** — `EventEmitter::Tauri(AppHandle)` 事件发射
 - **`web/router.rs`** — Axum 路由，接受 `Arc<AppState>`
 - **`web/handlers/`** — HTTP API 端点，全部使用 `Extension<Arc<AppState>>`
 
@@ -96,9 +89,8 @@ INSTA_UPDATE=auto cargo test --features test-utils     # 自动写新 .snap
 
 ### 数据流
 
-桌面模式：前端 `invoke()` → Tauri 命令 → 业务逻辑 → 返回数据
-服务器模式：前端 `fetch()` → Axum HTTP API → 同一业务逻辑 → 返回 JSON
-实时通信：后端事件 → EventEmitter（Tauri 事件 / WebSocket 广播）→ 前端
+数据流：前端 `invoke()` → Tauri 命令 → 业务逻辑 → 返回数据
+实时通信：后端事件 → EventEmitter（Tauri 事件）→ 前端
 
 ### 条件编译约定
 
@@ -110,8 +102,6 @@ INSTA_UPDATE=auto cargo test --features test-utils     # 自动写新 .snap
 
 - **仅支持静态导出**：`next.config.ts` 设置 `output: "export"`，不支持动态路由（`[param]`），必须使用查询参数替代
 - **路径别名**：`@/*` 映射到 `./src/*`，导入写法为 `@/lib/utils`、`@/components/ui/button`
-- **服务器部署**：通过环境变量配置（`CODEG_PORT`、`CODEG_HOST`、`CODEG_TOKEN`、`CODEG_DATA_DIR`、`CODEG_STATIC_DIR`）
-- **Docker 支持**：多阶段构建（Node.js + Rust），支持 `docker-compose` 一键部署
 
 ## 代码风格
 

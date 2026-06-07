@@ -6,13 +6,6 @@ declare module "next-intl" {
       | "en"
       | "zh-CN"
       | "zh-TW"
-      | "ja"
-      | "ko"
-      | "es"
-      | "de"
-      | "fr"
-      | "pt"
-      | "ar"
     Messages: typeof enMessages
   }
 }

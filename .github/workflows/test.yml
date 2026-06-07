@@ -50,37 +50,15 @@ jobs:
         run: pnpm build
 
   rust:
-    name: Rust ${{ matrix.mode }} on ${{ matrix.os }}
+    name: Rust on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-22.04, macos-latest, windows-latest]
-        mode: [desktop, server]
         include:
-          - mode: desktop
-            # `test-utils` exposes test scaffolding (AppState::new_for_test,
-            # EventEmitter::test_web_only, ConnectionManager::insert_test_connection,
-            # parser `with_base_dir`, `db::test_helpers`) for integration tests
-            # under `tests/`. Without the flag those items are physically
-            # uncompiled, so integration tests would fail to link.
-            cargo_args: "--features test-utils"
-            # Desktop clippy must lint integration tests too, so it picks up
-            # `--all-targets`. test-utils is already on, so tests compile.
+          - cargo_args: "--features test-utils"
             clippy_args: "--all-targets --features test-utils"
-          - mode: server
-            # Server build is feature-gated off the Tauri runtime; no
-            # need for webkit/appindicator system libs. `--lib` skips
-            # integration tests for `cargo test`, so `test-utils` is not
-            # required here.
-            cargo_args: "--no-default-features --bin codeg-server --lib"
-            # Server clippy intentionally skips `--all-targets`: integration
-            # tests are already linted in the desktop cells, and pulling
-            # them in here would force `test-utils` (a test-only feature)
-            # into the server build matrix. Lint scope here is lib + the
-            # codeg-server binary, which is exactly the cfg-gated surface
-            # that this cell exists to verify.
-            clippy_args: "--no-default-features --bin codeg-server --lib"
     steps:
       - uses: actions/checkout@v4
 
@@ -93,7 +71,7 @@ jobs:
         uses: swatinem/rust-cache@v2
         with:
           workspaces: "./src-tauri -> target"
-          shared-key: test-${{ matrix.os }}-${{ matrix.mode }}
+          shared-key: test-${{ matrix.os }}
 
       - name: Install Linux desktop dependencies
         # Only the Linux desktop build needs webkit/appindicator. Windows
@@ -110,7 +88,7 @@ jobs:
         # Tauri's build script validates `frontendDist` and bundled resource
         # paths during Rust compilation. The frontend job owns the real static
         # export; Rust desktop cells only need the path to exist for tests.
-        if: matrix.mode == 'desktop'
+        if: matrix.os == 'ubuntu-22.04'
         shell: bash
         run: |
           mkdir -p out
@@ -122,7 +100,7 @@ jobs:
         # compile coverage here; Linux/macOS desktop and Windows server cells
         # run the executable test suites.
         working-directory: src-tauri
-        run: cargo test ${{ matrix.cargo_args }} ${{ (matrix.os == 'windows-latest' && matrix.mode == 'desktop') && '--no-run' || '' }}
+        run: cargo test ${{ matrix.cargo_args }} ${{ (matrix.os == 'windows-latest') && '--no-run' || '' }}
 
       - name: cargo clippy
         # Clippy on each (os, mode) cell — desktop covers tauri-only code
@@ -138,7 +116,7 @@ jobs:
         # `_core` function in `commands/*.rs` so the Tauri command and HTTP
         # entrypoints share one implementation. Run on Linux only — pure
         # text check, no per-OS variance.
-        if: matrix.os == 'ubuntu-22.04' && matrix.mode == 'desktop'
+        if: matrix.os == 'ubuntu-22.04'
         working-directory: src-tauri
         run: |
           if grep -nE 'folder_service::|conversation_service::|tab_service::|import_service::' \
