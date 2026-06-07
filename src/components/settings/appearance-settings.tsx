@@ -21,8 +21,6 @@ import {
   type ThemeColor,
   type ZoomLevel,
 } from "@/lib/theme-presets"
-import { PetManagerSection } from "./pet-manager-section"
-
 type ThemeMode = "system" | "light" | "dark"
 
 export function AppearanceSettings() {
@@ -194,9 +192,6 @@ export function AppearanceSettings() {
             </p>
           </div>
         </section>
-
-        {/* ===== Desktop Pet ===== */}
-        <PetManagerSection />
       </div>
     </ScrollArea>
   )
